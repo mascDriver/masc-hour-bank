@@ -1,4 +1,4 @@
-# Nome do projeto
+# Masc Hour Bank
 
 <!---Esses são exemplos. Veja https://shields.io para outras pessoas ou para personalizar este conjunto de escudos. Você pode querer incluir dependências, status do projeto e informações de licença aqui--->
 
@@ -9,11 +9,11 @@
 ![Bitbucket open pull requests](https://img.shields.io/bitbucket/pr-raw/mascdriver/masc-hour-bank?style=for-the-badge)
 
 
-> Projeto em desenvolvimento
+> Projeto em desenvolvimento, disponível em: https://maschourbank.vercel.app/
 
 ## 🚀 Instalando dependencias
 
-Para instalar o <nome_do_projeto>, siga estas etapas:
+Para instalar o masc-hour-bank, siga estas etapas:
 
 Linux e macOS:
 ```
@@ -23,7 +23,7 @@ npm install
 
 ## ☕ Usando
 
-Para usar <nome_do_projeto>, siga estas etapas:
+Para usar masc-hour-bank, siga estas etapas:
 
 ```
 npm start
@@ -31,7 +31,7 @@ npm start
 
 ## 📫 Contribuindo para Masc Hour Bank
 <!---Se o seu README for longo ou se você tiver algum processo ou etapas específicas que deseja que os contribuidores sigam, considere a criação de um arquivo CONTRIBUTING.md separado--->
-Para contribuir com <nome_do_projeto>, siga estas etapas:
+Para contribuir com masc-hour-bank, siga estas etapas:
 
 1. Bifurque este repositório.
 2. Crie um branch: `git checkout -b <nome_branch>`.
