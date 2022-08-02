@@ -1,13 +1,16 @@
 import React from 'react';
-import {Container, Grid} from "@mui/material";
+import {Container, Grid, LinearProgress} from "@mui/material";
 import DataTable from "./DataTable";
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import TextField from '@mui/material/TextField';
-import {GridActionsCellItem} from "@mui/x-data-grid";
+import {DataGrid, GridActionsCellItem} from "@mui/x-data-grid";
 import DeleteIcon from '@mui/icons-material/Delete';
 import CreateAttendanceDay from "./CreateAttendanceDay";
+
+import Stack from '@mui/material/Stack';
+import CircularProgress from '@mui/material/CircularProgress';
 
 function FormatRow(dados) {
     return (
@@ -38,8 +41,8 @@ export default function AttendanceDay() {
             .then(dados => {
                 if (dados.length) {
                     setRow(FormatRow(dados[0]))
-                    setLoading(false)
                 }
+                setLoading(false)
             })
     }
     const handleSubmit = (hour) => {
@@ -108,7 +111,7 @@ export default function AttendanceDay() {
     const deletedAttendanceHour = React.useCallback(
         (attendance_hour) => () => {
             setTimeout(() => {
-                var data = {
+                const data = {
                     id: attendance_hour.id.split('_')[0],
                 };
 
@@ -144,29 +147,36 @@ export default function AttendanceDay() {
             ],
         },
     ];
-    if (isLoading) {
-        return <div className="App">Loading...</div>;
-    } else {
-        return (
-            <Container>
-                <Grid container columnSpacing={{xs: 1, sm: 2, md: 3}} padding={10}>
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                        <DatePicker
-                            views={['day']}
-                            label="Year, month and date"
-                            value={date}
-                            onChange={(newValue) => {
-                                setDate(newValue)
-                                populateFields(newValue);
-                            }}
-                            renderInput={(params) => <TextField {...params} helperText={null}/>}
-                        />
-                    </LocalizationProvider>
-                    <CreateAttendanceDay handleSubmit={handleSubmit}/>
-                    <DataTable rows={row} columns={columns} onCellEditCommit={updateAttendancceHour}/>
-                </Grid>
-            </Container>
-        );
-    }
+    return (
+        <Container>
+            <Grid container columnSpacing={{xs: 1, sm: 2, md: 3}} padding={10}>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <DatePicker
+                        views={['day']}
+                        label="Year, month and date"
+                        value={date}
+                        onChange={(newValue) => {
+                            setDate(newValue)
+                            populateFields(newValue);
+                        }}
+                        renderInput={(params) => <TextField {...params} helperText={null}/>}
+                    />
+                </LocalizationProvider>
+                <CreateAttendanceDay handleSubmit={handleSubmit}/>
+                {isLoading ? <div style={{height: 400, width: '100%'}}>
+                    <DataGrid
+                        components={{
+                            LoadingOverlay: LinearProgress,
+                        }}
+                        loading
+                        columns={columns}
+                        rows={[]}
+                    />
+                </div> : <DataTable rows={row} columns={columns} onCellEditCommit={updateAttendancceHour}/>
+                }
+            </Grid>
+        </Container>
+    );
+
 }
 
