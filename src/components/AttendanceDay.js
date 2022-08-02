@@ -7,6 +7,7 @@ import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import TextField from '@mui/material/TextField';
 import {GridActionsCellItem} from "@mui/x-data-grid";
 import DeleteIcon from '@mui/icons-material/Delete';
+import CreateAttendanceDay from "./CreateAttendanceDay";
 
 function FormatRow(dados) {
     return (
@@ -20,9 +21,52 @@ function FormatRow(dados) {
 }
 
 export default function AttendanceDay() {
+    const [isLoading, setLoading] = React.useState(true);
     const [row, setRow] = React.useState([]);
     const [date, setDate] = React.useState(new Date);
+    React.useEffect(() => {
+        initialDate();
+    }, []);
+    const initialDate = () => {
+        const value = new Date()
+        const day = value.getUTCDate()
+        const month = value.getMonth() + 1
+        const year = value.getFullYear()
 
+        fetch(`http://127.0.0.1:8000/attendance/day/${day}/month/${month}/year/${year}`)
+            .then(resposta => resposta.json())
+            .then(dados => {
+                if (dados.length) {
+                    setRow(FormatRow(dados[0]))
+                    setLoading(false)
+                }
+            })
+    }
+    const handleSubmit = (hour) => {
+        var data = {
+            "attendance_hour": hour.toLocaleString(),
+            "employee_shift": 1
+        }
+
+        const day = hour.getUTCDate()
+        const month = hour.getMonth() + 1
+        const year = hour.getFullYear()
+
+        fetch(`http://127.0.0.1:8000/attendance/day/${day}/month/${month}/year/${year}`,
+            {
+                method: "post",
+                credentials: "same-origin",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(resposta => resposta.json())
+            .then(dados => {
+                setRow(FormatRow(dados))
+            })
+    };
     const updateAttendancceHour = (attendance_hour) => {
         var data = {
             id: attendance_hour.id.split('_')[0],
@@ -50,12 +94,13 @@ export default function AttendanceDay() {
         const month = value.getMonth() + 1
         const year = value.getFullYear()
 
-        let attendance = []
         fetch(`http://127.0.0.1:8000/attendance/day/${day}/month/${month}/year/${year}`)
             .then(resposta => resposta.json())
             .then(dados => {
                 if (dados.length) {
                     setRow(FormatRow(dados[0]))
+                } else {
+                    setRow([])
                 }
             })
     }
@@ -79,7 +124,6 @@ export default function AttendanceDay() {
                     })
                     .then(resposta => resposta.json())
                     .then(dados => {
-                        console.log(dados)
                         setRow(FormatRow(dados))
                     })
             });
@@ -100,25 +144,29 @@ export default function AttendanceDay() {
             ],
         },
     ];
-
-    return (
-        <Container>
-            <Grid container columnSpacing={{xs: 1, sm: 2, md: 3}} padding={10}>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <DatePicker
-                        views={['day']}
-                        label="Year, month and date"
-                        value={date}
-                        onChange={(newValue) => {
-                            setDate(newValue)
-                            populateFields(newValue);
-                        }}
-                        renderInput={(params) => <TextField {...params} helperText={null}/>}
-                    />
-                </LocalizationProvider>
-                <DataTable rows={row} columns={columns} onCellEditCommit={updateAttendancceHour}/>
-            </Grid>
-        </Container>
-    );
+    if (isLoading) {
+        return <div className="App">Loading...</div>;
+    } else {
+        return (
+            <Container>
+                <Grid container columnSpacing={{xs: 1, sm: 2, md: 3}} padding={10}>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DatePicker
+                            views={['day']}
+                            label="Year, month and date"
+                            value={date}
+                            onChange={(newValue) => {
+                                setDate(newValue)
+                                populateFields(newValue);
+                            }}
+                            renderInput={(params) => <TextField {...params} helperText={null}/>}
+                        />
+                    </LocalizationProvider>
+                    <CreateAttendanceDay handleSubmit={handleSubmit}/>
+                    <DataTable rows={row} columns={columns} onCellEditCommit={updateAttendancceHour}/>
+                </Grid>
+            </Container>
+        );
+    }
 }
 
