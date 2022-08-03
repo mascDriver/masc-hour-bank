@@ -14,7 +14,7 @@ function RenderAttendanceMonth(values, columns) {
     return (<DataTable rows={rows} columns={columns}/>
     )
 }
-const URl = 'http://127.0.0.1:8001'
+const URl = 'https://masc-hour-bankapi.up.railway.app/'
 
 function PopulateFields(month, year) {
     const [mes, setMes] = useState([])

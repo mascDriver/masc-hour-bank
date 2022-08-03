@@ -14,7 +14,7 @@ import {Link as RouterLink, useNavigate} from "react-router-dom";
 import {useSnackbar} from "notistack";
 
 const theme = createTheme();
-const URL = 'http://127.0.0.1:8000'
+const URL = 'https://masc-hour-bankapi.up.railway.app/'
 
 export default function SignUp() {
     const {enqueueSnackbar} = useSnackbar();

@@ -21,7 +21,7 @@ function FormatRow(dados) {
         }))
     )
 }
-const URL = 'http://127.0.0.1:8000'
+const URL = 'https://masc-hour-bankapi.up.railway.app/'
 
 export default function AttendanceDay() {
     const [isLoading, setLoading] = React.useState(true);

@@ -19,7 +19,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import {useSnackbar} from "notistack";
 
 const theme = createTheme();
-const URL = 'http://127.0.0.1:8000'
+const URL = 'https://masc-hour-bankapi.up.railway.app'
 
 export default function SignIn() {
     const [open, setOpen] = React.useState(false);
