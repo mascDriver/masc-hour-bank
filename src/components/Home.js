@@ -7,19 +7,22 @@ import SignUp from "./SignUp";
 import ButtonAppBar from "./ButtonAppBar";
 import StickyFooter from "./StickyFooter";
 import AttendanceDay from "./AttendanceDay";
+import {SnackbarProvider} from "notistack";
 
 function Home() {
     return (
         <Router>
-            <ButtonAppBar/>
-            <Routes>
-                <Route path="/" element={<RenderHomePage/>}/>
-                <Route path="month" element={<AttendanceMonth/>}/>
-                <Route path="day" element={<AttendanceDay/>}/>
-                <Route path="signin" element={<SignIn/>}/>
-                <Route path="signup" element={<SignUp/>}/>
-            </Routes>
-            <StickyFooter/>
+            <SnackbarProvider maxSnack={10}>
+                <ButtonAppBar/>
+                <Routes>
+                    <Route path="/" element={<RenderHomePage/>}/>
+                    <Route path="month" element={<AttendanceMonth/>}/>
+                    <Route path="day" element={<AttendanceDay/>}/>
+                    <Route path="signin" element={<SignIn/>}/>
+                    <Route path="signup" element={<SignUp/>}/>
+                </Routes>
+                <StickyFooter/>
+            </SnackbarProvider>
         </Router>
     );
 }

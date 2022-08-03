@@ -12,6 +12,14 @@ import {Link as RouterLink} from "react-router-dom";
 
 export default function ButtonAppBar() {
     const theme = useTheme();
+    const [access_token, setAcess_token] = React.useState(null)
+
+    React.useEffect(() => {
+        setAcess_token(localStorage.getItem('authTokenAcess'))
+        if (localStorage.getItem('authTokenAcess') === 'null') {
+            setAcess_token(false)
+        }
+    }, []);
 
     return (
         <Box sx={{flexGrow: 1}}>
@@ -37,7 +45,14 @@ export default function ButtonAppBar() {
                         <Button to="/month" color="inherit" component={RouterLink}>Mes</Button>
                     </Typography>
                     <div align='right'>
-                        <Button to='/signin' color="inherit" component={RouterLink}>Login</Button>
+                        {access_token ? <Button color="inherit"
+                                                onClick={() => {
+                                                    localStorage.setItem("authTokenAcess", null)
+                                                    setAcess_token(null)
+                                                    window.location = '/'
+                                                }}>Logout</Button>
+                            : <Button to='/signin' color="inherit" component={RouterLink}>Login</Button>
+                        }
                     </div>
                     <div align='right'>
                         <ToggleDarkMode/>

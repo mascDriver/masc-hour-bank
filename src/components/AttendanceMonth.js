@@ -6,17 +6,37 @@ import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import TextField from '@mui/material/TextField';
 import {useEffect, useState} from 'react';
+import {useSnackbar} from "notistack";
+import {useNavigate} from "react-router-dom";
 
 function RenderAttendanceMonth(values, columns) {
-    const rows = PopulateFields(values.getMonth(), values.getFullYear())
+    const rows = PopulateFields(values.getMonth() + 1, values.getFullYear())
     return (<DataTable rows={rows} columns={columns}/>
     )
 }
+const URl = 'http://127.0.0.1:8001'
 
 function PopulateFields(month, year) {
     const [mes, setMes] = useState([])
+    const access_token = localStorage.getItem('authTokenAcess')
+
+    const {enqueueSnackbar} = useSnackbar();
+    const navigate = useNavigate();
     useEffect(() => {
-        fetch(`http://127.0.0.1:8000/attendance/month/${month}/year/${year}`)
+        if (access_token === 'null') {
+            navigate('/signin');
+            enqueueSnackbar('Você precisa estar logado', {variant: 'warning'})
+        }
+        fetch(`${URL}/attendance/month/${month}/year/${year}`,
+            {
+                method: "get",
+                credentials: "same-origin",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    'Authorization': "Bearer " + access_token,
+                }
+            })
             .then(resposta => resposta.json())
             .then(dados => {
                 setMes(dados)

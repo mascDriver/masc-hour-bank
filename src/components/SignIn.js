@@ -14,33 +14,64 @@ import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {Link as RouterLink} from "react-router-dom";
 import Link from "@mui/material/Link";
 
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link to="#">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import {useSnackbar} from "notistack";
 
 const theme = createTheme();
+const URL = 'http://127.0.0.1:8000'
 
 export default function SignIn() {
+    const [open, setOpen] = React.useState(false);
+
+    const {enqueueSnackbar} = useSnackbar();
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
+        setOpen(true)
+        fetch(`${URL}/api/token/`,
+            {
+                method: "post",
+                credentials: "same-origin",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                        username: data.get('email'),
+                        password: data.get('password')
+                    }
+                )
+            }).catch(() => {
+            enqueueSnackbar('Sistema fora do ar', {variant: 'error'})
+        }).then(resposta => {
+            if (resposta.status === 200) {
+                return resposta.json()
+            } else {
+                return resposta.json().then(err => {
+                    throw err;
+                });
+            }
+        }).catch((dados) => {
+            // variant could be success, error, warning, info, or default
+            if (dados.detail.length)
+                enqueueSnackbar(`${dados.detail}`, {variant: 'error'})
+        }).then(dados => {
+            localStorage.setItem("authTokenAcess", dados.access);
+            localStorage.setItem("authTokenRefresh", dados.refresh);
+            window.location = '/'
         });
-    };
+        setOpen(false)
+    }
 
     return (
         <ThemeProvider theme={theme}>
+            <Backdrop
+                sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
+                open={open}
+            >
+                <CircularProgress color="inherit"/>
+            </Backdrop>
             <Container component="main" maxWidth="xs">
                 <CssBaseline/>
                 <Box
@@ -55,15 +86,15 @@ export default function SignIn() {
                         <LockOutlinedIcon/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Sign in
+                        Entrar
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
+                    <Box component="form" onSubmit={handleSubmit} sx={{mt: 1}}>
                         <TextField
                             margin="normal"
                             required
                             fullWidth
                             id="email"
-                            label="Email Address"
+                            label="Email"
                             name="email"
                             autoComplete="email"
                             autoFocus
@@ -73,14 +104,14 @@ export default function SignIn() {
                             required
                             fullWidth
                             name="password"
-                            label="Password"
+                            label="Senha"
                             type="password"
                             id="password"
                             autoComplete="current-password"
                         />
                         <FormControlLabel
                             control={<Checkbox value="remember" color="primary"/>}
-                            label="Remember me"
+                            label="Lembre-me"
                         />
                         <Button
                             type="submit"
@@ -88,23 +119,17 @@ export default function SignIn() {
                             variant="contained"
                             sx={{mt: 3, mb: 2}}
                         >
-                            Sign In
+                            Entrar
                         </Button>
                         <Grid container>
-                            <Grid item xs>
-                                <Link to="#" variant="body2" component={RouterLink}>
-                                    Forgot password?
-                                </Link>
-                            </Grid>
                             <Grid item>
                                 <Link to="/signup" variant="body2" component={RouterLink}>
-                                    {"Don't have an account? Sign Up"}
+                                    {"Ainda não possui conta? Se inscreva aqui"}
                                 </Link>
                             </Grid>
                         </Grid>
                     </Box>
                 </Box>
-                <Copyright sx={{mt: 8, mb: 4}}/>
             </Container>
         </ThemeProvider>
     );

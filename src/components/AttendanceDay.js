@@ -8,9 +8,8 @@ import TextField from '@mui/material/TextField';
 import {DataGrid, GridActionsCellItem} from "@mui/x-data-grid";
 import DeleteIcon from '@mui/icons-material/Delete';
 import CreateAttendanceDay from "./CreateAttendanceDay";
-
-import Stack from '@mui/material/Stack';
-import CircularProgress from '@mui/material/CircularProgress';
+import {useSnackbar} from "notistack";
+import {useNavigate} from "react-router-dom";
 
 function FormatRow(dados) {
     return (
@@ -22,21 +21,40 @@ function FormatRow(dados) {
         }))
     )
 }
+const URL = 'http://127.0.0.1:8000'
 
 export default function AttendanceDay() {
     const [isLoading, setLoading] = React.useState(true);
     const [row, setRow] = React.useState([]);
     const [date, setDate] = React.useState(new Date);
+    const access_token = localStorage.getItem('authTokenAcess')
+    const {enqueueSnackbar} = useSnackbar();
+    const navigate = useNavigate();
+
     React.useEffect(() => {
+        if (access_token === 'null') {
+            navigate('/signin');
+            enqueueSnackbar('Você precisa estar logado', {variant: 'warning'})
+        }
         initialDate();
     }, []);
+
     const initialDate = () => {
         const value = new Date()
         const day = value.getUTCDate()
         const month = value.getMonth() + 1
         const year = value.getFullYear()
 
-        fetch(`http://127.0.0.1:8000/attendance/day/${day}/month/${month}/year/${year}`)
+        fetch(`${URL}/attendance/day/${day}/month/${month}/year/${year}`,
+            {
+                method: "get",
+                credentials: "same-origin",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    'Authorization': "Bearer " + access_token,
+                }
+            })
             .then(resposta => resposta.json())
             .then(dados => {
                 if (dados.length) {
@@ -46,8 +64,9 @@ export default function AttendanceDay() {
             })
     }
     const handleSubmit = (hour) => {
+        const attendance_date = new Date(date.toDateString() + ' ' + hour.toTimeString())
         var data = {
-            "attendance_hour": hour.toLocaleString(),
+            "attendance_hour": attendance_date.toISOString(),
             "employee_shift": 1
         }
 
@@ -55,13 +74,14 @@ export default function AttendanceDay() {
         const month = hour.getMonth() + 1
         const year = hour.getFullYear()
 
-        fetch(`http://127.0.0.1:8000/attendance/day/${day}/month/${month}/year/${year}`,
+        fetch(`${URL}/attendance/day/${day}/month/${month}/year/${year}`,
             {
                 method: "post",
                 credentials: "same-origin",
                 headers: {
                     "Accept": "application/json",
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    'Authorization': "Bearer " + access_token,
                 },
                 body: JSON.stringify(data)
             })
@@ -76,13 +96,14 @@ export default function AttendanceDay() {
             attendance_hour: attendance_hour.value,
         };
 
-        fetch(`http://127.0.0.1:8000/attendance/day/${attendance_hour.id.split('_')[1]}/`,
+        fetch(`${URL}/attendance/day/${attendance_hour.id.split('_')[1]}/`,
             {
                 method: "patch",
                 credentials: "same-origin",
                 headers: {
                     "Accept": "application/json",
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    'Authorization': "Bearer " + access_token,
                 },
                 body: JSON.stringify(data)
             })
@@ -97,7 +118,16 @@ export default function AttendanceDay() {
         const month = value.getMonth() + 1
         const year = value.getFullYear()
 
-        fetch(`http://127.0.0.1:8000/attendance/day/${day}/month/${month}/year/${year}`)
+        fetch(`${URL}/attendance/day/${day}/month/${month}/year/${year}`,
+            {
+                method: "get",
+                credentials: "same-origin",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    'Authorization': "Bearer " + access_token,
+                }
+            })
             .then(resposta => resposta.json())
             .then(dados => {
                 if (dados.length) {
@@ -115,13 +145,14 @@ export default function AttendanceDay() {
                     id: attendance_hour.id.split('_')[0],
                 };
 
-                fetch(`http://127.0.0.1:8000/attendance/day/${attendance_hour.id.split('_')[1]}/`,
+                fetch(`${URL}/attendance/day/${attendance_hour.id.split('_')[1]}/`,
                     {
                         method: "delete",
                         credentials: "same-origin",
                         headers: {
                             "Accept": "application/json",
-                            "Content-Type": "application/json"
+                            "Content-Type": "application/json",
+                            'Authorization': "Bearer " + access_token,
                         },
                         body: JSON.stringify(data)
                     })
