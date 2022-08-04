@@ -21,6 +21,7 @@ function FormatRow(dados) {
         }))
     )
 }
+
 const URL = 'https://masc-hour-bankapi.up.railway.app'
 
 export default function AttendanceDay() {
@@ -165,9 +166,9 @@ export default function AttendanceDay() {
         [],
     );
     const columns = [
-        {field: 'day', headerName: 'Dia', width: 300, type: 'date'},
-        {field: 'name', headerName: 'Nome', width: 300},
-        {field: 'attendance_hour', headerName: 'Hora Batida', width: 300, editable: true},
+        {field: 'day', headerName: 'Dia', flex: 1, type: 'date'},
+        {field: 'name', headerName: 'Nome', flex: 1},
+        {field: 'attendance_hour', headerName: 'Hora Batida', flex: 1, editable: true},
         {
             field: 'actions', type: 'actions', width: 80, getActions: (params) => [
                 <GridActionsCellItem
@@ -180,32 +181,42 @@ export default function AttendanceDay() {
     ];
     return (
         <Container>
-            <Grid container columnSpacing={{xs: 1, sm: 2, md: 3}} padding={10}>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <DatePicker
-                        views={['day']}
-                        label="Year, month and date"
-                        value={date}
-                        onChange={(newValue) => {
-                            setDate(newValue)
-                            populateFields(newValue);
-                        }}
-                        renderInput={(params) => <TextField {...params} helperText={null}/>}
-                    />
-                </LocalizationProvider>
-                <CreateAttendanceDay handleSubmit={handleSubmit}/>
-                {isLoading ? <div style={{height: 400, width: '100%'}}>
-                    <DataGrid
-                        components={{
-                            LoadingOverlay: LinearProgress,
-                        }}
-                        loading
-                        columns={columns}
-                        rows={[]}
-                    />
-                </div> : <DataTable rows={row} columns={columns} onCellEditCommit={updateAttendancceHour}/>
-                }
+            <Grid container columnSpacing={{xs: 1, sm: 2, md: 3}} paddingTop={10} justifyContent="center"
+                  alignItems="center">
+                <Grid item xs={6} md={8}>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DatePicker
+                            inputFormat="dd/MM/yyyy"
+                            views={['day']}
+                            label="Dia, mes e ano"
+                            value={date}
+                            onChange={(newValue) => {
+                                setDate(newValue)
+                                populateFields(newValue);
+                            }}
+                            renderInput={(params) => <TextField {...params} helperText={null}/>}
+                        />
+                    </LocalizationProvider>
+                </Grid>
+                <Grid item xs={6} md={2}>
+                    <CreateAttendanceDay handleSubmit={handleSubmit}/>
+                </Grid>
+                <Grid item xs={12}>
+                    {isLoading ? <div style={{height: 400, width: '100%'}}>
+                        <DataGrid
+                            components={{
+                                LoadingOverlay: LinearProgress,
+                            }}
+                            loading
+                            columns={columns}
+                            rows={[]}
+                        />
+                    </div> : <DataTable rows={row} columns={columns} onCellEditCommit={updateAttendancceHour}/>
+                    }
+
+                </Grid>
             </Grid>
+
         </Container>
     );
 

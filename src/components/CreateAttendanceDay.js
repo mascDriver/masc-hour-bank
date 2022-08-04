@@ -52,7 +52,7 @@ export default function CreateAttendanceDay(...props) {
                     </DialogContentText>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <StaticTimePicker
-                            ampm
+                            ampm={false}
                             orientation="landscape"
                             openTo="minutes"
                             value={hour}

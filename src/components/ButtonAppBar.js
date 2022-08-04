@@ -6,12 +6,12 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import ToggleDarkMode from "./ToggleDarkMode";
-import {CssBaseline, useTheme} from "@mui/material";
+import {CssBaseline} from "@mui/material";
 import {Link as RouterLink} from "react-router-dom";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
 
-export default function ButtonAppBar() {
-    const theme = useTheme();
+export default function ButtonAppBar(...props) {
     const [access_token, setAcess_token] = React.useState(null)
 
     React.useEffect(() => {
@@ -55,8 +55,10 @@ export default function ButtonAppBar() {
                         }
                     </div>
                     <div align='right'>
-                        <ToggleDarkMode/>
-                    </div>
+
+                        <IconButton sx={{ml: 1}} onClick={props[0].colorMode.ToggleDarkMode} color="inherit">
+                            {props[0].theme.palette.mode === 'dark' ? <Brightness7Icon/> : <Brightness4Icon/>}
+                        </IconButton></div>
                 </Toolbar>
             </AppBar>
         </Box>

@@ -14,6 +14,7 @@ function RenderAttendanceMonth(values, columns) {
     return (<DataTable rows={rows} columns={columns}/>
     )
 }
+
 const URL = 'https://masc-hour-bankapi.up.railway.app'
 
 function PopulateFields(month, year) {
@@ -61,27 +62,32 @@ function AttendanceMonth() {
     const [value, setValue] = React.useState(new Date());
 
     const columns = [
-        {field: 'day', headerName: 'Dia', width: 300},
-        {field: 'name', headerName: 'Nome', width: 300},
-        {field: 'attendance_hour', headerName: 'Total de horas trabalhadas', width: 300}
+        {field: 'day', headerName: 'Dia', flex: 1},
+        {field: 'name', headerName: 'Nome', flex: 1},
+        {field: 'attendance_hour', headerName: 'Total de horas trabalhadas', flex: 1}
     ];
 
 
     return (
         <Container>
-            <Grid container columnSpacing={{xs: 1, sm: 2, md: 3}} padding={10}>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <DatePicker
-                        views={['year', 'month']}
-                        label="Year and Month"
-                        value={value}
-                        onChange={(newValue) => {
-                            setValue(newValue);
-                        }}
-                        renderInput={(params) => <TextField {...params} helperText={null}/>}
-                    />
-                </LocalizationProvider>
-                {RenderAttendanceMonth(value, columns)}
+            <Grid container columnSpacing={{xs: 1, sm: 2, md: 3}} paddingTop={10} justifyContent="center"
+                  alignItems="center">
+                <Grid item xs={12}>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DatePicker
+                            views={['year', 'month']}
+                            label="Year and Month"
+                            value={value}
+                            onChange={(newValue) => {
+                                setValue(newValue);
+                            }}
+                            renderInput={(params) => <TextField {...params} helperText={null}/>}
+                        />
+                    </LocalizationProvider>
+                </Grid>
+                <Grid item xs={12}>
+                    {RenderAttendanceMonth(value, columns)}
+                </Grid>
             </Grid>
         </Container>
     );
