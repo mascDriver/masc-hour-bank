@@ -14,7 +14,7 @@ function RenderAttendanceMonth(values, columns) {
     return (<DataTable rows={rows} columns={columns}/>
     )
 }
-const URl = 'https://masc-hour-bankapi.up.railway.app/'
+const URL = 'https://masc-hour-bankapi.up.railway.app'
 
 function PopulateFields(month, year) {
     const [mes, setMes] = useState([])
@@ -23,7 +23,7 @@ function PopulateFields(month, year) {
     const {enqueueSnackbar} = useSnackbar();
     const navigate = useNavigate();
     useEffect(() => {
-        if (access_token === 'null') {
+        if (access_token === 'null' || !access_token) {
             navigate('/signin');
             enqueueSnackbar('Você precisa estar logado', {variant: 'warning'})
         }

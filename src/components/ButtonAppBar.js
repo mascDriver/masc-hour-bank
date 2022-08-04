@@ -17,7 +17,7 @@ export default function ButtonAppBar() {
     React.useEffect(() => {
         setAcess_token(localStorage.getItem('authTokenAcess'))
         if (localStorage.getItem('authTokenAcess') === 'null') {
-            setAcess_token(false)
+            setAcess_token(null)
         }
     }, []);
 

@@ -21,7 +21,7 @@ function FormatRow(dados) {
         }))
     )
 }
-const URL = 'https://masc-hour-bankapi.up.railway.app/'
+const URL = 'https://masc-hour-bankapi.up.railway.app'
 
 export default function AttendanceDay() {
     const [isLoading, setLoading] = React.useState(true);
@@ -32,7 +32,7 @@ export default function AttendanceDay() {
     const navigate = useNavigate();
 
     React.useEffect(() => {
-        if (access_token === 'null') {
+        if (access_token === 'null' || !access_token) {
             navigate('/signin');
             enqueueSnackbar('Você precisa estar logado', {variant: 'warning'})
         }

@@ -14,7 +14,7 @@ import {Link as RouterLink, useNavigate} from "react-router-dom";
 import {useSnackbar} from "notistack";
 
 const theme = createTheme();
-const URL = 'https://masc-hour-bankapi.up.railway.app/'
+const URL = 'https://masc-hour-bankapi.up.railway.app'
 
 export default function SignUp() {
     const {enqueueSnackbar} = useSnackbar();
@@ -56,11 +56,11 @@ export default function SignUp() {
             })
             .catch((dados) => {
                 // variant could be success, error, warning, info, or default
-                if (dados.email.length)
+                if (dados.email)
                     enqueueSnackbar(`Email -> ${dados.email.map(error => error)}`, {variant: 'error'})
-                if (dados.password.length)
+                if (dados.password)
                     enqueueSnackbar(`Senha -> ${dados.password.map(error => error)}`, {variant: 'error'})
-                if (dados.password2.length)
+                if (dados.password2)
                     enqueueSnackbar(`Confirmação de senha -> ${dados.password2.map(error => error)}`, {variant: 'error'})
             });
 
