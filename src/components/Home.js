@@ -10,6 +10,7 @@ import AttendanceDay from "./AttendanceDay";
 import {SnackbarProvider} from "notistack";
 import {CssBaseline} from "@mui/material";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
+import {deepOrange} from '@mui/material/colors';
 
 function Home() {
     const [mode, setMode] = useState('light');
@@ -27,6 +28,18 @@ function Home() {
             createTheme({
                 palette: {
                     mode,
+                    primary: {
+                        main: deepOrange[900],
+                        darker: deepOrange['A700'],
+                    },
+                    secondary: {
+                        main: deepOrange['A700'],
+                    },
+                },
+                typography: {
+                    button: {
+                        textTransform: 'none'
+                    }
                 },
             }),
         [mode],

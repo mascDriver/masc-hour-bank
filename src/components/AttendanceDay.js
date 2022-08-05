@@ -10,6 +10,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CreateAttendanceDay from "./CreateAttendanceDay";
 import {useSnackbar} from "notistack";
 import {useNavigate} from "react-router-dom";
+import SpeedDialTooltipOpen from "./SpeedDialTooltipOpen";
 
 function FormatRow(dados) {
     return (
@@ -213,7 +214,7 @@ export default function AttendanceDay() {
                         />
                     </div> : <DataTable rows={row} columns={columns} onCellEditCommit={updateAttendancceHour}/>
                     }
-
+                    <SpeedDialTooltipOpen handleSubmit={handleSubmit}/>
                 </Grid>
             </Grid>
 

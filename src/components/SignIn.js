@@ -57,6 +57,7 @@ export default function SignIn() {
         }).then(dados => {
             localStorage.setItem("authTokenAcess", dados.access);
             localStorage.setItem("authTokenRefresh", dados.refresh);
+            localStorage.setItem("authFirstName", dados.first_name);
             window.location = '/'
         });
         setOpen(false)
@@ -94,6 +95,7 @@ export default function SignIn() {
                         label="Email"
                         name="email"
                         autoComplete="email"
+                        type="email"
                         autoFocus
                     />
                     <TextField
