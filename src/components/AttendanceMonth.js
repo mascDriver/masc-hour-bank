@@ -30,7 +30,7 @@ function PopulateFields(month, year) {
         }
         fetch(`${URL}/attendance/month/${month}/year/${year}`,
             {
-                method: "get",
+                method: "GET",
                 credentials: "same-origin",
                 headers: {
                     "Accept": "application/json",

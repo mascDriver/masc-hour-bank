@@ -23,8 +23,7 @@ export default function SignUp() {
         const data = new FormData(event.currentTarget);
         fetch(`${URL}/api/register/`,
             {
-                method: "post",
-                credentials: "same-origin",
+                method: "POST",
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json"

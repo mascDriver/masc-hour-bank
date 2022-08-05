@@ -29,8 +29,7 @@ export default function SignIn() {
         setOpen(true)
         fetch(`${URL}/api/token/`,
             {
-                method: "post",
-                credentials: "same-origin",
+                method: "POST",
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json"

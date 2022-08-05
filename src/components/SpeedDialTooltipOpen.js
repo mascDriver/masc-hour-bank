@@ -30,7 +30,7 @@ export default function SpeedDialTooltipOpen(...props) {
                     onClick={
                         () => {
                             props[0].handleSubmit(new Date())
-                            handleClose
+                            setOpen(false)
                         }
                     }
                 />

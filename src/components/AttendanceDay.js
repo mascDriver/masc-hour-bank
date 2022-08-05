@@ -49,8 +49,7 @@ export default function AttendanceDay() {
 
         fetch(`${URL}/attendance/day/${day}/month/${month}/year/${year}`,
             {
-                method: "get",
-                credentials: "same-origin",
+                method: "GET",
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
@@ -78,8 +77,7 @@ export default function AttendanceDay() {
 
         fetch(`${URL}/attendance/day/${day}/month/${month}/year/${year}`,
             {
-                method: "post",
-                credentials: "same-origin",
+                method: "POST",
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
@@ -100,8 +98,7 @@ export default function AttendanceDay() {
 
         fetch(`${URL}/attendance/day/${attendance_hour.id.split('_')[1]}/`,
             {
-                method: "patch",
-                credentials: "same-origin",
+                method: "PATCH",
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
@@ -122,8 +119,7 @@ export default function AttendanceDay() {
 
         fetch(`${URL}/attendance/day/${day}/month/${month}/year/${year}`,
             {
-                method: "get",
-                credentials: "same-origin",
+                method: "GET",
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
@@ -149,8 +145,7 @@ export default function AttendanceDay() {
 
                 fetch(`${URL}/attendance/day/${attendance_hour.id.split('_')[1]}/`,
                     {
-                        method: "delete",
-                        credentials: "same-origin",
+                        method: "DELETE",
                         headers: {
                             "Accept": "application/json",
                             "Content-Type": "application/json",
