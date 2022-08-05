@@ -12,6 +12,7 @@ import {CssBaseline} from "@mui/material";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
 import {deepOrange, orange, blueGrey} from '@mui/material/colors';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import {ConfirmProvider} from "material-ui-confirm";
 
 function Home() {
     const [mode, setMode] = useState('light');
@@ -58,15 +59,17 @@ function Home() {
             <ThemeProvider theme={theme}>
                 <CssBaseline/>
                 <SnackbarProvider maxSnack={10}>
-                    <ButtonAppBar colorMode={colorMode} theme={theme}/>
-                    <Routes>
-                        <Route path="/" element={<RenderHomePage/>}/>
-                        <Route path="month" element={<AttendanceMonth/>}/>
-                        <Route path="day" element={<AttendanceDay/>}/>
-                        <Route path="signin" element={<SignIn/>}/>
-                        <Route path="signup" element={<SignUp/>}/>
-                    </Routes>
-                    <StickyFooter/>
+                    <ConfirmProvider>
+                        <ButtonAppBar colorMode={colorMode} theme={theme}/>
+                        <Routes>
+                            <Route path="/" element={<RenderHomePage/>}/>
+                            <Route path="month" element={<AttendanceMonth/>}/>
+                            <Route path="day" element={<AttendanceDay/>}/>
+                            <Route path="signin" element={<SignIn/>}/>
+                            <Route path="signup" element={<SignUp/>}/>
+                        </Routes>
+                        <StickyFooter/>
+                    </ConfirmProvider>
                 </SnackbarProvider>
             </ThemeProvider>
         </Router>

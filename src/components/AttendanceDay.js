@@ -11,6 +11,7 @@ import CreateAttendanceDay from "./CreateAttendanceDay";
 import {useSnackbar} from "notistack";
 import {useNavigate} from "react-router-dom";
 import SpeedDialTooltipOpen from "./SpeedDialTooltipOpen";
+import {useConfirm} from "material-ui-confirm";
 
 function FormatRow(dados) {
     return (
@@ -26,6 +27,7 @@ function FormatRow(dados) {
 const URL = 'https://masc-hour-bankapi.up.railway.app'
 
 export default function AttendanceDay() {
+    const confirm = useConfirm();
     const [isLoading, setLoading] = React.useState(true);
     const [row, setRow] = React.useState([]);
     const [date, setDate] = React.useState(new Date);
@@ -142,21 +144,26 @@ export default function AttendanceDay() {
                 const data = {
                     id: attendance_hour.id.split('_')[0],
                 };
+                confirm({title:'Você tem certeza?', description: `Deseja deletar o registro de hora ${attendance_hour.row.attendance_hour}?`})
+                    .then(() => {
+                        fetch(`${URL}/attendance/day/${attendance_hour.id.split('_')[1]}/`,
+                            {
+                                method: "DELETE",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Content-Type": "application/json",
+                                    'Authorization': "Bearer " + access_token,
+                                },
+                                body: JSON.stringify(data)
+                            })
+                            .then(resposta => resposta.json())
+                            .then(dados => {
+                                setRow(FormatRow(dados))
+                            })
+                    })
+                    .catch(() => console.log("Deletion cancelled."));
 
-                fetch(`${URL}/attendance/day/${attendance_hour.id.split('_')[1]}/`,
-                    {
-                        method: "DELETE",
-                        headers: {
-                            "Accept": "application/json",
-                            "Content-Type": "application/json",
-                            'Authorization': "Bearer " + access_token,
-                        },
-                        body: JSON.stringify(data)
-                    })
-                    .then(resposta => resposta.json())
-                    .then(dados => {
-                        setRow(FormatRow(dados))
-                    })
+
             });
         },
         [],
