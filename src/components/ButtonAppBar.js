@@ -11,6 +11,8 @@ import Brightness7Icon from "@mui/icons-material/Brightness7";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import AccountMenu from "./AccountMenu";
 import {CalendarMonth, CalendarToday, Home, Login} from "@mui/icons-material";
+import TemporaryDrawer from "./TemporaryDrawer";
+import {Grid} from "@mui/material";
 
 export default function ButtonAppBar(...props) {
     const [access_token, setAcess_token] = React.useState(null)
@@ -26,31 +28,11 @@ export default function ButtonAppBar(...props) {
         <Box sx={{flexGrow: 1}}>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{mr: 2}}
-                    >
-                        <MenuIcon/>
-                    </IconButton>
-                    <Typography variant="h6" component="div">
-                        <Button to="/" color="inherit" component={RouterLink}>
-                            <Home fontSize='small'/>
-                            <Typography variant='subtitle1' paddingLeft={0.5}>Home</Typography>
-                        </Button>
-                    </Typography>
-                    <Typography variant="h6" component="div">
-                        <Button to="/day" color="inherit" component={RouterLink}>
-                            <CalendarToday fontSize='small'/>
-                            <Typography variant='subtitle1' paddingLeft={0.5}>Dia</Typography>
-                        </Button>
-                    </Typography>
+                    <TemporaryDrawer/>
                     <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                        <Button to="/month" color="inherit" component={RouterLink}>
-                            <CalendarMonth fontSize='small'/>
-                            <Typography variant='subtitle1' paddingLeft={0.5}>Mes</Typography>
+                        <Button to="/" color="inherit" component={RouterLink}>
+                            <Home fontSize='medium'/>
+                            <Typography variant='h6' paddingLeft={0.5}>Home</Typography>
                         </Button>
                     </Typography>
                     <div align='right'>
@@ -62,10 +44,11 @@ export default function ButtonAppBar(...props) {
                             </Button>
                         }
                     </div>
-                    <div align='right'>
+                    <Grid paddingLeft={3}>
                         <IconButton sx={{ml: 1}} onClick={props[0].colorMode.ToggleDarkMode} color="inherit">
                             {props[0].theme.palette.mode === 'dark' ? <Brightness7Icon/> : <Brightness4Icon/>}
-                        </IconButton></div>
+                        </IconButton>
+                    </Grid>
                 </Toolbar>
             </AppBar>
         </Box>
