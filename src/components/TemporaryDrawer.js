@@ -7,16 +7,12 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from "@mui/icons-material/Menu";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import {Link as RouterLink} from "react-router-dom";
-import {CalendarMonth, CalendarToday, Home} from "@mui/icons-material";
+import {CalendarMonth, CalendarToday, Home, Login} from "@mui/icons-material";
 
-export default function TemporaryDrawer() {
+export default function TemporaryDrawer(...props) {
     const [state, setState] = React.useState(false);
 
     const toggleDrawer = (open) => (event) => {
@@ -26,9 +22,9 @@ export default function TemporaryDrawer() {
         setState(open);
     };
 
-    const list = (anchor) => (
+    const list = () => (
         <Box
-            sx={{width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250}}
+            sx={{width: 250}}
             role="presentation"
             onClick={toggleDrawer(false)}
             onKeyDown={toggleDrawer(false)}
@@ -44,24 +40,37 @@ export default function TemporaryDrawer() {
                 </ListItem>
             </List>
             <Divider/>
-            <List>
-                <ListItem disablePadding>
-                    <ListItemButton to="/day" color="inherit" component={RouterLink}>
-                        <ListItemIcon>
-                            <CalendarToday />
-                        </ListItemIcon>
-                        <ListItemText primary={'Dia'}/>
-                    </ListItemButton>
-                </ListItem>
-                <ListItem disablePadding>
-                    <ListItemButton to="/month" color="inherit" component={RouterLink}>
-                        <ListItemIcon>
-                            <CalendarMonth/>
-                        </ListItemIcon>
-                            <ListItemText primary={'Mes'}/>
-                    </ListItemButton>
-                </ListItem>
-            </List>
+            {props[0].access_token ?
+                <List>
+                    <ListItem disablePadding>
+                        <ListItemButton to="/day" color="inherit" component={RouterLink}>
+                            <ListItemIcon>
+                                <CalendarToday/>
+                            </ListItemIcon>
+                            <ListItemText primary={'Horários no dia'}/>
+                        </ListItemButton>
+                    </ListItem>
+                    <ListItem disablePadding>
+                        <ListItemButton to="/month" color="inherit" component={RouterLink}>
+                            <ListItemIcon>
+                                <CalendarMonth/>
+                            </ListItemIcon>
+                            <ListItemText primary={'Horários no mês'}/>
+                        </ListItemButton>
+                    </ListItem>
+                </List>
+                :
+                <List>
+                    <ListItem disablePadding>
+                        <ListItemButton to="/signin" color="inherit" component={RouterLink}>
+                            <ListItemIcon>
+                                <Login/>
+                            </ListItemIcon>
+                            <ListItemText primary={'Login'}/>
+                        </ListItemButton>
+                    </ListItem>
+                </List>
+            }
         </Box>
     );
 

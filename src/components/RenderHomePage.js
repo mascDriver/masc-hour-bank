@@ -13,9 +13,9 @@ function RenderHomePage() {
                     Masc Hour Bank
                 </Typography>
                 <Typography variant="h5" component="h2" gutterBottom>
-                    {'Save your hour attendances and don\'t worry if you need to remember\n'}
+                    {'Salve e consulte seus horários de entrada e saída de maneira rápida e objetiva.'}
                 </Typography>
-                <Typography variant="body1">Start right now</Typography>
+                <Typography variant="body1">{'Comece agora mesmo.'}</Typography>
             </Container>
         </Box>
     );

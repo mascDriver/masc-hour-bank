@@ -1,16 +1,16 @@
 import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import {Icon} from "@iconify/react/dist/iconify";
 import githubIcon from '@iconify-icons/mdi/github';
+import {deepOrange, orange} from '@mui/material/colors';
 
 function Copyright() {
     return (
         <Typography variant="body2" color="text.secondary">
-            {'Copyright © mascDriver'}
+            {'Copyright © mascDriver '}
             <Link href='https://github.com/mascDriver' color="inherit" target="_blank">
                 <Icon icon={githubIcon}/>
                 Github
@@ -30,7 +30,6 @@ export default function StickyFooter() {
                 minHeight: '57.5vh'
             }}
         >
-            <CssBaseline/>
             <Box
                 component="footer"
                 sx={{
@@ -39,7 +38,7 @@ export default function StickyFooter() {
                     mt: 'auto',
                     backgroundColor: (theme) =>
                         theme.palette.mode === 'light'
-                            ? theme.palette.grey[200]
+                            ? deepOrange[200]
                             : theme.palette.grey[800],
                 }}
             >

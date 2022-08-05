@@ -28,7 +28,7 @@ export default function ButtonAppBar(...props) {
         <Box sx={{flexGrow: 1}}>
             <AppBar position="static">
                 <Toolbar>
-                    <TemporaryDrawer/>
+                    <TemporaryDrawer access_token={access_token}/>
                     <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                         <Button to="/" color="inherit" component={RouterLink}>
                             <Home fontSize='medium'/>
@@ -44,7 +44,7 @@ export default function ButtonAppBar(...props) {
                             </Button>
                         }
                     </div>
-                    <Grid paddingLeft={3}>
+                    <Grid paddingLeft={{md:3, xs:1}}>
                         <IconButton sx={{ml: 1}} onClick={props[0].colorMode.ToggleDarkMode} color="inherit">
                             {props[0].theme.palette.mode === 'dark' ? <Brightness7Icon/> : <Brightness4Icon/>}
                         </IconButton>
