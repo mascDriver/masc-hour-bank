@@ -11,9 +11,15 @@ import {SnackbarProvider} from "notistack";
 import {CssBaseline} from "@mui/material";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
 import {deepOrange, orange, blueGrey} from '@mui/material/colors';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 function Home() {
     const [mode, setMode] = useState('light');
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+    React.useEffect(() => {
+        setMode(prefersDarkMode ? 'dark' : 'light')
+    }, [])
+
     const colorMode = useMemo(
         () => ({
             ToggleDarkMode: () => {
@@ -29,7 +35,7 @@ function Home() {
                 palette: {
                     mode,
                     background: {
-                        default: mode === 'light' ? orange[50]: blueGrey[800],
+                        default: mode === 'light' ? orange[50] : blueGrey[800],
                     },
                     primary: {
                         main: deepOrange[900],
