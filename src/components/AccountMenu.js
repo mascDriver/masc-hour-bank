@@ -31,7 +31,11 @@ export default function AccountMenu() {
                         aria-haspopup="true"
                         aria-expanded={open ? 'true' : undefined}
                     >
-                        <Avatar>{Array.from(localStorage.getItem('authFirstName'))[0]}</Avatar>
+                        <Avatar>{
+                            localStorage.getItem('authFirstName') ?
+                                Array.from(localStorage.getItem('authFirstName'))[0] :
+                                ' '
+                        }</Avatar>
                     </IconButton>
                 </Tooltip>
             </Box>
