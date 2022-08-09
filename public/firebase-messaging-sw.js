@@ -4,7 +4,13 @@ importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compa
 
 // Initialize the Firebase app in the service worker by passing the generated config
 const firebaseConfig = {
-    messagingSenderId: "956264474936"
+    apiKey: "AIzaSyA-HGW2GVU474Q92cjoMyq9g6lD4bKK3vU",
+    authDomain: "masc-hour-banc.firebaseapp.com",
+    projectId: "masc-hour-banc",
+    storageBucket: "masc-hour-banc.appspot.com",
+    messagingSenderId: "956264474936",
+    appId: "1:956264474936:web:a3300733f2c287e11e79cd",
+    measurementId: "G-JWHG9HJRBH"
 };
 
 firebase.initializeApp(firebaseConfig);
