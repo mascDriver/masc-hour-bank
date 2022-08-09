@@ -10,15 +10,41 @@ import AttendanceDay from "./AttendanceDay";
 import {SnackbarProvider} from "notistack";
 import {CssBaseline} from "@mui/material";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
-import {deepOrange, orange, blueGrey} from '@mui/material/colors';
+import {blueGrey, deepOrange, orange} from '@mui/material/colors';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import {ConfirmProvider} from "material-ui-confirm";
+import {fetchToken} from '../push-notification';
+
+const URL = 'https://masc-hour-bankapi.up.railway.app'
 
 function Home() {
     const [mode, setMode] = useState('light');
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+    const access_token = localStorage.getItem('authTokenAcess')
+    const tokenPushNotification = localStorage.getItem('tokenPushNotification')
+    const tokenPushNotificationSave = localStorage.getItem('tokenPushNotificationSave')
+
     React.useEffect(() => {
         setMode(prefersDarkMode ? 'dark' : 'light')
+        if (access_token) {
+            fetchToken()
+        }
+        if (access_token && tokenPushNotification && tokenPushNotificationSave) {
+            fetch(`${URL}/firebase/devices/`, {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    'Content-Type': 'application/json',
+                    'Authorization': "Bearer " + access_token
+                },
+                body: JSON.stringify({
+                    'registration_id': tokenPushNotification,
+                    'type': 'web',
+                }),
+            }).then(function (response) {
+                localStorage.removeItem('tokenPushNotificationSave')
+            })
+        }
     }, [])
 
     const colorMode = useMemo(

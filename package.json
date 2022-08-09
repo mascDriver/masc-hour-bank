@@ -16,6 +16,8 @@
     "@mui/x-data-grid": "^5.13.1",
     "@mui/x-date-pickers": "^5.0.0-beta.2",
     "date-fns": "^2.29.1",
+    "dotenv": "^16.0.1",
+    "firebase": "^9.9.2",
     "material-ui-confirm": "^3.0.4",
     "notistack": "^2.0.5",
     "react": "^18.2.0",

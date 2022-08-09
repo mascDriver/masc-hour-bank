@@ -10,6 +10,8 @@ import Tooltip from '@mui/material/Tooltip';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 
+const URL = 'https://masc-hour-bankapi.up.railway.app'
+
 export default function AccountMenu() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -88,9 +90,14 @@ export default function AccountMenu() {
                     Configurações
                 </MenuItem>
                 <MenuItem onClick={() => {
-                    localStorage.setItem("authTokenAcess", null)
-                    localStorage.setItem('authFirstName', null)
-                    window.location = '/'
+                    localStorage.removeItem("authTokenAcess")
+                    localStorage.removeItem('authFirstName')
+                    fetch(`${URL}/attendance/user/logout`)
+                        .then(response => response)
+                        .then(data => {
+                            if (data.ok)
+                                window.location = '/'
+                        })
                 }}>
                     <ListItemIcon>
                         <Logout fontSize="small"/>

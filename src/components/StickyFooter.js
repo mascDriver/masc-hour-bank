@@ -6,6 +6,9 @@ import Link from '@mui/material/Link';
 import {Icon} from "@iconify/react/dist/iconify";
 import githubIcon from '@iconify-icons/mdi/github';
 import {deepOrange, orange} from '@mui/material/colors';
+import {useSnackbar} from "notistack";
+import {onMessage} from "firebase/messaging";
+import {messaging} from "../push-notification";
 
 function Copyright() {
     return (
@@ -22,6 +25,10 @@ function Copyright() {
 }
 
 export default function StickyFooter() {
+    const {enqueueSnackbar} = useSnackbar();
+    onMessage(messaging, (payload) => {
+        enqueueSnackbar(payload.notification.body, {variant: 'info', preventDuplicate: true})
+    })
     return (
         <Box
             sx={{
