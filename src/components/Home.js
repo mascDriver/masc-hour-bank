@@ -23,6 +23,19 @@ function Home() {
     const access_token = localStorage.getItem('authTokenAcess')
     const tokenPushNotification = localStorage.getItem('tokenPushNotification')
     const tokenPushNotificationSave = localStorage.getItem('tokenPushNotificationSave')
+    const [deviceType, setDeviceType] = useState("");
+
+    React.useEffect(() => {
+        if (
+            /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Windows Phone/i.test(
+                navigator.userAgent
+            )
+        ) {
+            setDeviceType("android");
+        } else {
+            setDeviceType("web");
+        }
+    }, []);
 
     React.useEffect(() => {
         setMode(prefersDarkMode ? 'dark' : 'light')
@@ -39,7 +52,7 @@ function Home() {
                 },
                 body: JSON.stringify({
                     'registration_id': tokenPushNotification,
-                    'type': 'web',
+                    'type': deviceType,
                 }),
             }).then(function (response) {
                 localStorage.removeItem('tokenPushNotificationSave')
