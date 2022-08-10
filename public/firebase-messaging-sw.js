@@ -25,9 +25,7 @@ messaging.onBackgroundMessage(function (payload) {
     const notificationOptions = {
         body: payload.notification.body,
         icon: "/img.png",
-        badge: "/badge-128x128.png",
-        vibrate: [200, 100, 200, 100, 200, 100, 200],
-        tag: 'vibration-sample'
+        badge: "/badge_128.png"
     };
 
     self.registration.showNotification(notificationTitle,
