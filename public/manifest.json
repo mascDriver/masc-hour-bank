@@ -35,22 +35,22 @@
     "description": "Save your working hours the easy way.",
   "screenshots": [
     {
-      "src": "/images/home_desktop.png",
+      "src": "images/home_desktop.png",
       "type": "image/png",
       "sizes": "1280x800"
     },
     {
-      "src": "/images/home_desktop.png",
+      "src": "images/home_desktop.png",
       "type": "image/png",
       "sizes": "1280x800"
     },
     {
-      "src": "/images/home_mobile.png",
+      "src": "images/home_mobile.png",
       "type": "image/png",
       "sizes": "750x1334"
     },
     {
-      "src": "/images/login_mobile.jpg",
+      "src": "images/login_mobile.jpg",
       "type": "image/jpg",
       "sizes": "750x1334"
     }
