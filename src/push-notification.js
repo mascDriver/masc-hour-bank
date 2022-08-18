@@ -2,6 +2,7 @@
 import {initializeApp} from "firebase/app";
 import {getMessaging, getToken, onMessage} from "firebase/messaging";
 import {getAnalytics} from "firebase/analytics";
+import {saveTokenFCM} from "./hooks/PostDataApi";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -23,17 +24,18 @@ const app = initializeApp(firebaseConfig);
 export const messaging = getMessaging(app);
 const analytics = getAnalytics(app);
 
-export const fetchToken = (setToken) => {
+export const fetchToken = () => {
     return getToken(messaging, {vapidKey: 'BL3pWSm96zELSrqYPmoOSueafufpuNFy1RKX5Fq1DgWJTIPi5UZSV_Zq90vl1rzWxmLu_4oXmYq_njPwJ2o2iRE'}).then((currentToken) => {
         if (currentToken) {
-            localStorage.setItem('tokenPushNotification', currentToken)
-            localStorage.setItem('tokenPushNotificationSave', true)
+            if (localStorage.getItem('tokenPushNotification') !== currentToken) {
+                localStorage.setItem('tokenPushNotification', currentToken)
+                saveTokenFCM(currentToken)
+            }
             // Track the token -> client mapping, by sending to backend server
             // show on the UI that permission is secured
         } else {
             console.log('No registration token available. Request permission to generate one.');
             localStorage.removeItem('tokenPushNotification')
-            localStorage.setItem('tokenPushNotificationSave', true)
             // shows on the UI that permission is required
         }
     }).catch((err) => {

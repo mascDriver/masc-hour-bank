@@ -16,8 +16,8 @@ import Link from "@mui/material/Link";
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import {useSnackbar} from "notistack";
+import {postSignIn} from "../hooks/PostDataApi";
 
-const URL = 'https://masc-hour-bankapi.up.railway.app'
 
 export default function SignIn() {
     const [open, setOpen] = React.useState(false);
@@ -27,38 +27,7 @@ export default function SignIn() {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         setOpen(true)
-        fetch(`${URL}/api/token/`,
-            {
-                method: "POST",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                        username: data.get('email'),
-                        password: data.get('password')
-                    }
-                )
-            }).catch(() => {
-            enqueueSnackbar('Sistema fora do ar', {variant: 'error'})
-        }).then(resposta => {
-            if (resposta.status === 200) {
-                return resposta.json()
-            } else {
-                return resposta.json().then(err => {
-                    throw err;
-                });
-            }
-        }).catch((dados) => {
-            // variant could be success, error, warning, info, or default
-            if (dados.detail.length)
-                enqueueSnackbar(`${dados.detail}`, {variant: 'error'})
-        }).then(dados => {
-            localStorage.setItem("authTokenAcess", dados.access);
-            localStorage.setItem("authTokenRefresh", dados.refresh);
-            localStorage.setItem("authFirstName", dados.first_name);
-            window.location = '/'
-        });
+        postSignIn(data, enqueueSnackbar)
         setOpen(false)
     }
 

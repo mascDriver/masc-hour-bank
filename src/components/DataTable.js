@@ -1,10 +1,11 @@
 import * as React from 'react';
 import {DataGrid} from '@mui/x-data-grid';
+import {patchAttendancceHour} from "../hooks/PatchDataApi";
 
 
-export default function DataTable(...props) {
-    const rows = props[0].rows
-    const columns = props[0].columns
+export default function DataTable(props) {
+    const rows = props.rows
+    const columns = props.columns
 
     return (
         <div style={{height: 400, width: '100%'}}>
@@ -22,7 +23,7 @@ export default function DataTable(...props) {
                         }}
                         rows={rows}
                         columns={columns}
-                        onCellEditCommit={props[0].onCellEditCommit}
+                        onCellEditCommit={(hour) => {patchAttendancceHour(hour, props.setRow)}}
                         pageSize={5}
                         rowsPerPageOptions={[5]}
                     />

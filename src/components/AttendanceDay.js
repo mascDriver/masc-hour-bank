@@ -12,19 +12,8 @@ import {useSnackbar} from "notistack";
 import {useNavigate} from "react-router-dom";
 import SpeedDialTooltipOpen from "./SpeedDialTooltipOpen";
 import {useConfirm} from "material-ui-confirm";
-
-function FormatRow(dados) {
-    return (
-        dados.attendance_hour.map(dia => ({
-            id: `${dia.id}_${dados.id}`,
-            day: dados.day,
-            name: dados.employee_shift,
-            attendance_hour: dia.hour,
-        }))
-    )
-}
-
-const URL = 'https://masc-hour-bankapi.up.railway.app'
+import {getAttendanceDate, getInitialDate} from "../hooks/GetDataApi";
+import {deleteAttendenceHour} from "../hooks/DeleteDataApi";
 
 export default function AttendanceDay() {
     const confirm = useConfirm();
@@ -40,103 +29,8 @@ export default function AttendanceDay() {
             navigate('/signin');
             enqueueSnackbar('Você precisa estar logado', {variant: 'warning'})
         }
-        initialDate();
+        getInitialDate(setRow, setLoading, enqueueSnackbar, navigate);
     }, []);
-
-    const initialDate = () => {
-        const value = new Date()
-        const day = value.getUTCDate()
-        const month = value.getMonth() + 1
-        const year = value.getFullYear()
-
-        fetch(`${URL}/attendance/day/${day}/month/${month}/year/${year}`,
-            {
-                method: "GET",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                    'Authorization': "Bearer " + access_token,
-                }
-            })
-            .then(resposta => resposta.json())
-            .then(dados => {
-                if (dados.length) {
-                    setRow(FormatRow(dados[0]))
-                }
-                setLoading(false)
-            })
-    }
-    const handleSubmit = (hour) => {
-        const attendance_date = new Date(date.toDateString() + ' ' + hour.toTimeString())
-        var data = {
-            "attendance_hour": attendance_date.toISOString(),
-            "employee_shift": 1
-        }
-
-        const day = hour.getUTCDate()
-        const month = hour.getMonth() + 1
-        const year = hour.getFullYear()
-
-        fetch(`${URL}/attendance/day/${day}/month/${month}/year/${year}`,
-            {
-                method: "POST",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                    'Authorization': "Bearer " + access_token,
-                },
-                body: JSON.stringify(data)
-            })
-            .then(resposta => resposta.json())
-            .then(dados => {
-                setRow(FormatRow(dados))
-            })
-    };
-    const updateAttendancceHour = (attendance_hour) => {
-        var data = {
-            id: attendance_hour.id.split('_')[0],
-            attendance_hour: attendance_hour.value,
-        };
-
-        fetch(`${URL}/attendance/day/${attendance_hour.id.split('_')[1]}/`,
-            {
-                method: "PATCH",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                    'Authorization': "Bearer " + access_token,
-                },
-                body: JSON.stringify(data)
-            })
-            .then(resposta => resposta.json())
-            .then(dados => {
-                setRow(FormatRow(dados))
-            })
-    }
-
-    const populateFields = (value) => {
-        const day = value.getUTCDate()
-        const month = value.getMonth() + 1
-        const year = value.getFullYear()
-
-        fetch(`${URL}/attendance/day/${day}/month/${month}/year/${year}`,
-            {
-                method: "GET",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                    'Authorization': "Bearer " + access_token,
-                }
-            })
-            .then(resposta => resposta.json())
-            .then(dados => {
-                if (dados.length) {
-                    setRow(FormatRow(dados[0]))
-                } else {
-                    setRow([])
-                }
-            })
-    }
 
     const deletedAttendanceHour = React.useCallback(
         (attendance_hour) => () => {
@@ -144,26 +38,14 @@ export default function AttendanceDay() {
                 const data = {
                     id: attendance_hour.id.split('_')[0],
                 };
-                confirm({title:'Você tem certeza?', description: `Deseja deletar o registro de hora ${attendance_hour.row.attendance_hour}?`})
+                confirm({
+                    title: 'Você tem certeza?',
+                    description: `Deseja deletar o registro de hora ${attendance_hour.row.attendance_hour}?`
+                })
                     .then(() => {
-                        fetch(`${URL}/attendance/day/${attendance_hour.id.split('_')[1]}/`,
-                            {
-                                method: "DELETE",
-                                headers: {
-                                    "Accept": "application/json",
-                                    "Content-Type": "application/json",
-                                    'Authorization': "Bearer " + access_token,
-                                },
-                                body: JSON.stringify(data)
-                            })
-                            .then(resposta => resposta.json())
-                            .then(dados => {
-                                setRow(FormatRow(dados))
-                            })
+                        deleteAttendenceHour(attendance_hour, data, setRow)
                     })
                     .catch(() => console.log("Deletion cancelled."));
-
-
             });
         },
         [],
@@ -195,14 +77,14 @@ export default function AttendanceDay() {
                             value={date}
                             onChange={(newValue) => {
                                 setDate(newValue)
-                                populateFields(newValue);
+                                getAttendanceDate(newValue, setRow, navigate, enqueueSnackbar);
                             }}
                             renderInput={(params) => <TextField {...params} helperText={null}/>}
                         />
                     </LocalizationProvider>
                 </Grid>
                 <Grid item xs={6} md={2}>
-                    <CreateAttendanceDay handleSubmit={handleSubmit}/>
+                    <CreateAttendanceDay date={date}/>
                 </Grid>
                 <Grid item xs={12}>
                     {isLoading ? <div style={{height: 400, width: '100%'}}>
@@ -214,9 +96,9 @@ export default function AttendanceDay() {
                             columns={columns}
                             rows={[]}
                         />
-                    </div> : <DataTable rows={row} columns={columns} onCellEditCommit={updateAttendancceHour}/>
+                    </div> : <DataTable rows={row} columns={columns} setRow={setRow}/>
                     }
-                    <SpeedDialTooltipOpen handleSubmit={handleSubmit}/>
+                    <SpeedDialTooltipOpen setRow={setRow}/>
                 </Grid>
             </Grid>
 

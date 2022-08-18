@@ -8,6 +8,7 @@ import TextField from '@mui/material/TextField';
 import {useEffect, useState} from 'react';
 import {useSnackbar} from "notistack";
 import {useNavigate} from "react-router-dom";
+import {getInitialMonth} from "../hooks/GetDataApi";
 
 function RenderAttendanceMonth(values, columns) {
     const rows = PopulateFields(values.getMonth() + 1, values.getFullYear())
@@ -15,7 +16,6 @@ function RenderAttendanceMonth(values, columns) {
     )
 }
 
-const URL = 'https://masc-hour-bankapi.up.railway.app'
 
 function PopulateFields(month, year) {
     const [mes, setMes] = useState([])
@@ -28,20 +28,7 @@ function PopulateFields(month, year) {
             navigate('/signin');
             enqueueSnackbar('Você precisa estar logado', {variant: 'warning'})
         }
-        fetch(`${URL}/attendance/month/${month}/year/${year}`,
-            {
-                method: "GET",
-                credentials: "same-origin",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                    'Authorization': "Bearer " + access_token,
-                }
-            })
-            .then(resposta => resposta.json())
-            .then(dados => {
-                setMes(dados)
-            })
+        getInitialMonth(month, year,  setMes, navigate, enqueueSnackbar)
 
     }, [month])
     let rows = []

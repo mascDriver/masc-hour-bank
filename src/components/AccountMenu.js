@@ -9,8 +9,8 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
+import {getLogout} from "../hooks/GetDataApi";
 
-const URL = 'https://masc-hour-bankapi.up.railway.app'
 
 export default function AccountMenu() {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -92,12 +92,7 @@ export default function AccountMenu() {
                 <MenuItem onClick={() => {
                     localStorage.removeItem("authTokenAcess")
                     localStorage.removeItem('authFirstName')
-                    fetch(`${URL}/attendance/user/logout`)
-                        .then(response => response)
-                        .then(data => {
-                            if (data.ok)
-                                window.location = '/'
-                        })
+                    getLogout()
                 }}>
                     <ListItemIcon>
                         <Logout fontSize="small"/>

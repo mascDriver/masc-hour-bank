@@ -11,8 +11,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {Link as RouterLink, useNavigate} from "react-router-dom";
 import {useSnackbar} from "notistack";
+import {postSignUp} from "../hooks/PostDataApi";
 
-const URL = 'https://masc-hour-bankapi.up.railway.app'
 
 export default function SignUp() {
     const {enqueueSnackbar} = useSnackbar();
@@ -21,45 +21,7 @@ export default function SignUp() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        fetch(`${URL}/api/register/`,
-            {
-                method: "POST",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                        password: data.get('password'),
-                        password2: data.get('password2'),
-                        email: data.get('email'),
-                        username: data.get('email'),
-                        first_name: data.get('firstName'),
-                        last_name: data.get('lastName'),
-                    }
-                )
-            })
-            .then(resposta => {
-                if (resposta.ok) {
-                    return resposta.json()
-                } else {
-                    return resposta.json().then(err => {
-                        throw err;
-                    });
-                }
-            })
-            .then(() => {
-                navigate('/signin');
-                enqueueSnackbar('Sucesso, efetue o login', {variant: 'success'})
-            })
-            .catch((dados) => {
-                // variant could be success, error, warning, info, or default
-                if (dados.email)
-                    enqueueSnackbar(`Email -> ${dados.email.map(error => error)}`, {variant: 'error'})
-                if (dados.password)
-                    enqueueSnackbar(`Senha -> ${dados.password.map(error => error)}`, {variant: 'error'})
-                if (dados.password2)
-                    enqueueSnackbar(`Confirmação de senha -> ${dados.password2.map(error => error)}`, {variant: 'error'})
-            });
+        postSignUp(data, enqueueSnackbar, navigate)
 
     };
 

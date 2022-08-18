@@ -17,5 +17,42 @@
   "display": "standalone",
   "theme_color": "#fff",
   "background_color": "#bf360c",
-  "scope": "/"
+  "scope": "/",
+  "shortcuts": [
+    {
+      "name": "Adicionar marcação agora?",
+      "short_name": "Marcar agora",
+      "description": "Adicionar marcação de agora.",
+      "url": "/day?source=pwa",
+      "icons": [
+        {
+          "src": "img.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+    "description": "Save your working hours the easy way.",
+  "screenshots": [
+    {
+      "src": "/images/home_desktop.png",
+      "type": "image/png",
+      "sizes": "1280x800"
+    },
+    {
+      "src": "/images/home_desktop.png",
+      "type": "image/png",
+      "sizes": "1280x800"
+    },
+    {
+      "src": "/images/home_mobile.png",
+      "type": "image/png",
+      "sizes": "750x1334"
+    },
+    {
+      "src": "/images/login_mobile.jpg",
+      "type": "image/jpg",
+      "sizes": "750x1334"
+    }
+  ]
 }

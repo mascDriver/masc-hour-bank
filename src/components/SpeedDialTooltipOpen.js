@@ -5,8 +5,9 @@ import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import AddAlarm from '@mui/icons-material/AddAlarm';
+import {postNewAttendance} from "../hooks/PostDataApi";
 
-export default function SpeedDialTooltipOpen(...props) {
+export default function SpeedDialTooltipOpen(props) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -29,7 +30,7 @@ export default function SpeedDialTooltipOpen(...props) {
                     tooltipOpen
                     onClick={
                         () => {
-                            props[0].handleSubmit(new Date())
+                            postNewAttendance(new Date(), new Date(), props.setRow)
                             setOpen(false)
                         }
                     }

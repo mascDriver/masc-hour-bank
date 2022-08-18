@@ -15,39 +15,14 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import {ConfirmProvider} from "material-ui-confirm";
 import {fetchToken} from '../push-notification';
 
-const URL = 'https://masc-hour-bankapi.up.railway.app'
 
 function Home() {
     const [mode, setMode] = useState('light');
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-    const access_token = localStorage.getItem('authTokenAcess')
-    const tokenPushNotification = localStorage.getItem('tokenPushNotification')
-    const tokenPushNotificationSave = localStorage.getItem('tokenPushNotificationSave')
 
     React.useEffect(() => {
         setMode(prefersDarkMode ? 'dark' : 'light')
-        if (access_token) {
-            fetchToken()
-        }
-        if (access_token && tokenPushNotification && tokenPushNotificationSave) {
-            fetch(`${URL}/firebase/devices/`, {
-                method: "POST",
-                headers: {
-                    "Accept": "application/json",
-                    'Content-Type': 'application/json',
-                    'Authorization': "Bearer " + access_token
-                },
-                body: JSON.stringify({
-                    'registration_id': tokenPushNotification,
-                    'type': /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Windows Phone/i.test(
-                        navigator.userAgent
-                    ) ? 'android' : 'web',
-                }),
-            }).then(function (response) {
-                console.log(response)
-                localStorage.removeItem('tokenPushNotificationSave')
-            })
-        }
+        fetchToken()
     }, [])
 
     const colorMode = useMemo(

@@ -10,12 +10,13 @@ import {StaticTimePicker} from "@mui/x-date-pickers";
 
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
+import {postNewAttendance} from "../hooks/PostDataApi";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function CreateAttendanceDay(...props) {
+export default function CreateAttendanceDay(date) {
     const [hour, setHour] = React.useState(new Date());
 
     const handleChangeHour = (newHour) => {
@@ -57,7 +58,9 @@ export default function CreateAttendanceDay(...props) {
                             openTo="minutes"
                             value={hour}
                             onChange={handleChangeHour}
-                            onAccept={props[0].handleSubmit}
+                            onAccept={() => {
+                                postNewAttendance(hour, date)
+                            }}
                             onClose={handleClose}
                             renderInput={(params) => <TextField {...params} />}
                         />
