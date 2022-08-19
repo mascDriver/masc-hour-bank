@@ -15,7 +15,7 @@
   ],
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#fff",
+  "theme_color": "#bf360c",
   "background_color": "#bf360c",
   "scope": "/",
   "shortcuts": [
