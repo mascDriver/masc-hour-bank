@@ -16,7 +16,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function CreateAttendanceDay(date) {
+export default function CreateAttendanceDay(props) {
     const [hour, setHour] = React.useState(new Date());
 
     const handleChangeHour = (newHour) => {
@@ -59,7 +59,7 @@ export default function CreateAttendanceDay(date) {
                             value={hour}
                             onChange={handleChangeHour}
                             onAccept={() => {
-                                postNewAttendance(hour, date)
+                                postNewAttendance(hour, props.date)
                             }}
                             onClose={handleClose}
                             renderInput={(params) => <TextField {...params} />}
