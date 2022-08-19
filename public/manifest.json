@@ -40,7 +40,7 @@
       "sizes": "1280x800"
     },
     {
-      "src": "images/home_desktop.png",
+      "src": "images/login_desktop.png",
       "type": "image/png",
       "sizes": "1280x800"
     },
@@ -50,7 +50,7 @@
       "sizes": "750x1334"
     },
     {
-      "src": "images/login_mobile.jpg",
+      "src": "images/login_mobile.png",
       "type": "image/jpg",
       "sizes": "750x1334"
     }
