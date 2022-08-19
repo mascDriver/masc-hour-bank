@@ -22,7 +22,8 @@ function Home() {
 
     React.useEffect(() => {
         setMode(prefersDarkMode ? 'dark' : 'light')
-        fetchToken()
+        if (localStorage.getItem('authTokenAcess'))
+            fetchToken()
     }, [])
 
     const colorMode = useMemo(

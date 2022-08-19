@@ -26,7 +26,7 @@ const analytics = getAnalytics(app);
 
 export const fetchToken = () => {
     return getToken(messaging, {vapidKey: 'BL3pWSm96zELSrqYPmoOSueafufpuNFy1RKX5Fq1DgWJTIPi5UZSV_Zq90vl1rzWxmLu_4oXmYq_njPwJ2o2iRE'}).then((currentToken) => {
-        if (currentToken  && localStorage.getItem('authTokenAcess')) {
+        if (currentToken) {
             if (localStorage.getItem('tokenPushNotification') !== currentToken) {
                 localStorage.setItem('tokenPushNotification', currentToken)
                 saveTokenFCM(currentToken)
