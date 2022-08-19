@@ -84,7 +84,7 @@ export default function AttendanceDay() {
                     </LocalizationProvider>
                 </Grid>
                 <Grid item xs={6} md={2}>
-                    <CreateAttendanceDay date={date}/>
+                    <CreateAttendanceDay date={date} setRow={setRow}/>
                 </Grid>
                 <Grid item xs={12}>
                     {isLoading ? <div style={{height: 400, width: '100%'}}>

@@ -59,7 +59,7 @@ export default function CreateAttendanceDay(props) {
                             value={hour}
                             onChange={handleChangeHour}
                             onAccept={() => {
-                                postNewAttendance(hour, props.date)
+                                postNewAttendance(hour, props.date, props.setRow)
                             }}
                             onClose={handleClose}
                             renderInput={(params) => <TextField {...params} />}

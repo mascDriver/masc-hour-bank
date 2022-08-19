@@ -42,7 +42,7 @@ const postNewAttendance = (hour, date, setRow) => {
             body: JSON.stringify(data)
         })
         .then(resposta => resposta.json())
-        .then(dados => {
+        .then((dados) => {
             setRow(FormatRow(dados))
         })
 };
