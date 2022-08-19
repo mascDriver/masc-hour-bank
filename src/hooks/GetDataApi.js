@@ -1,10 +1,8 @@
 import {FormatRow} from "../utils/format";
-
-const URL = 'https://masc-hour-bankapi.up.railway.app'
-const access_token = localStorage.getItem('authTokenAcess')
+import {access_token, URL_API} from "../utils/config";
 
 const getLogout = () => {
-    fetch(`${URL}/attendance/user/logout`)
+    fetch(`${URL_API}/attendance/user/logout`)
         .then(response => response)
         .then(data => {
             if (data.ok)
@@ -17,7 +15,7 @@ const getInitialDate = (setRow, setLoading, enqueueSnackbar, navigate) => {
     const month = value.getMonth() + 1
     const year = value.getFullYear()
 
-    fetch(`${URL}/attendance/day/${day}/month/${month}/year/${year}`,
+    fetch(`${URL_API}/attendance/day/${day}/month/${month}/year/${year}`,
         {
             method: "GET",
             headers: {
@@ -46,7 +44,7 @@ const getAttendanceDate = (value, setRow, navigate, enqueueSnackbar) => {
     const month = value.getMonth() + 1
     const year = value.getFullYear()
 
-    fetch(`${URL}/attendance/day/${day}/month/${month}/year/${year}`,
+    fetch(`${URL_API}/attendance/day/${day}/month/${month}/year/${year}`,
         {
             method: "GET",
             headers: {
@@ -72,7 +70,7 @@ const getAttendanceDate = (value, setRow, navigate, enqueueSnackbar) => {
 }
 
 const getInitialMonth = (month, year, setMes, navigate, enqueueSnackbar) => {
-    fetch(`${URL}/attendance/month/${month}/year/${year}`,
+    fetch(`${URL_API}/attendance/month/${month}/year/${year}`,
         {
             method: "GET",
             credentials: "same-origin",

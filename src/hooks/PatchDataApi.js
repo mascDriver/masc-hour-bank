@@ -1,14 +1,13 @@
 import {FormatRow} from "../utils/format";
+import {access_token, URL_API} from "../utils/config";
 
-const URL = 'https://masc-hour-bankapi.up.railway.app'
-const access_token = localStorage.getItem('authTokenAcess')
 const patchAttendancceHour = (attendance_hour, setRow) => {
-    var data = {
+    const data = {
         id: attendance_hour.id.split('_')[0],
         attendance_hour: attendance_hour.value,
     };
 
-    fetch(`${URL}/attendance/day/${attendance_hour.id.split('_')[1]}/`,
+    fetch(`${URL_API}/attendance/day/${attendance_hour.id.split('_')[1]}/`,
         {
             method: "PATCH",
             headers: {

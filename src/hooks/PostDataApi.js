@@ -1,10 +1,8 @@
 import {FormatRow} from "../utils/format";
-
-const URL = 'https://masc-hour-bankapi.up.railway.app'
-const access_token = localStorage.getItem('authTokenAcess')
+import {access_token, URL_API} from "../utils/config";
 
 const saveTokenFCM = (tokenPushNotification) => {
-    fetch(`${URL}/firebase/devices/`, {
+    fetch(`${URL_API}/firebase/devices/`, {
         method: "POST",
         headers: {
             "Accept": "application/json",
@@ -33,7 +31,7 @@ const postNewAttendance = (hour, date, setRow) => {
     const month = hour.getMonth() + 1
     const year = hour.getFullYear()
 
-    fetch(`${URL}/attendance/day/${day}/month/${month}/year/${year}`,
+    fetch(`${URL_API}/attendance/day/${day}/month/${month}/year/${year}`,
         {
             method: "POST",
             headers: {
@@ -50,7 +48,7 @@ const postNewAttendance = (hour, date, setRow) => {
 };
 
 const postSignIn = (data, enqueueSnackbar) => {
-    fetch(`${URL}/api/token/`,
+    fetch(`${URL_API}/api/token/`,
         {
             method: "POST",
             headers: {
@@ -84,7 +82,7 @@ const postSignIn = (data, enqueueSnackbar) => {
     });
 }
 const postSignUp = (data, enqueueSnackbar, navigate) => {
-    fetch(`${URL}/api/register/`,
+    fetch(`${URL_API}/api/register/`,
         {
             method: "POST",
             headers: {

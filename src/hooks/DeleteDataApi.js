@@ -1,10 +1,8 @@
 import {FormatRow} from "../utils/format";
-
-const URL = 'https://masc-hour-bankapi.up.railway.app'
-const access_token = localStorage.getItem('authTokenAcess')
+import {access_token, URL_API} from "../utils/config";
 
 const deleteAttendenceHour = (attendance_hour, data, setRow) => {
-    fetch(`${URL}/attendance/day/${attendance_hour.id.split('_')[1]}/`,
+    fetch(`${URL_API}/attendance/day/${attendance_hour.id.split('_')[1]}/`,
         {
             method: "DELETE",
             headers: {
