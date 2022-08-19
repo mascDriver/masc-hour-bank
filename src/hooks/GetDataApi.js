@@ -34,7 +34,10 @@ const getInitialDate = (setRow, setLoading, enqueueSnackbar, navigate) => {
         })
         .then(dados => {
             if (dados) {
-                setRow(FormatRow(dados[0]))
+                if (new Array(dados).length)
+                    setRow(FormatRow(dados[0]))
+                else
+                    setRow([])
             }
             setLoading(false)
         })
@@ -62,7 +65,10 @@ const getAttendanceDate = (value, setRow, navigate, enqueueSnackbar) => {
             }
         }).then(dados => {
         if (dados) {
-            setRow(FormatRow(dados[0]))
+            if (new Array(dados).length)
+                setRow(FormatRow(dados[0]))
+            else
+                setRow([])
         } else {
             setRow([])
         }
