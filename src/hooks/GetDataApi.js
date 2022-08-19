@@ -34,7 +34,7 @@ const getInitialDate = (setRow, setLoading, enqueueSnackbar, navigate) => {
         })
         .then(dados => {
             if (dados) {
-                if (new Array(dados).length)
+                if (dados.length)
                     setRow(FormatRow(dados[0]))
                 else
                     setRow([])
@@ -42,10 +42,11 @@ const getInitialDate = (setRow, setLoading, enqueueSnackbar, navigate) => {
             setLoading(false)
         })
 }
-const getAttendanceDate = (value, setRow, navigate, enqueueSnackbar) => {
+const getAttendanceDate = (value, setRow, navigate, enqueueSnackbar, setLoading) => {
     const day = value.getUTCDate()
     const month = value.getMonth() + 1
     const year = value.getFullYear()
+    setLoading(true)
 
     fetch(`${URL_API}/attendance/day/${day}/month/${month}/year/${year}`,
         {
@@ -65,13 +66,12 @@ const getAttendanceDate = (value, setRow, navigate, enqueueSnackbar) => {
             }
         }).then(dados => {
         if (dados) {
-            if (new Array(dados).length)
+            if (dados.length)
                 setRow(FormatRow(dados[0]))
             else
                 setRow([])
-        } else {
-            setRow([])
         }
+        setLoading(false)
     })
 }
 

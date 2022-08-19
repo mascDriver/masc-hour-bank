@@ -77,7 +77,7 @@ export default function AttendanceDay() {
                             value={date}
                             onChange={(newValue) => {
                                 setDate(newValue)
-                                getAttendanceDate(newValue, setRow, navigate, enqueueSnackbar);
+                                getAttendanceDate(newValue, setRow, navigate, enqueueSnackbar, setLoading);
                             }}
                             renderInput={(params) => <TextField {...params} helperText={null}/>}
                         />
