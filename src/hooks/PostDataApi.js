@@ -1,6 +1,7 @@
 import {FormatRow} from "../utils/format";
 
-const URL = 'https://maschourbank.vercel.app'
+const URL = 'https://masc-hour-bankapi.up.railway.app'
+const access_token = localStorage.getItem('authTokenAcess')
 
 const saveTokenFCM = (tokenPushNotification) => {
     fetch(`${URL}/firebase/devices/`, {
@@ -22,7 +23,6 @@ const saveTokenFCM = (tokenPushNotification) => {
     })
 }
 const postNewAttendance = (hour, date, setRow) => {
-    const access_token = localStorage.getItem('authTokenAcess')
     const attendance_date = new Date(date.toDateString() + ' ' + hour.toTimeString())
     const data = {
         "attendance_hour": attendance_date.toISOString(),
