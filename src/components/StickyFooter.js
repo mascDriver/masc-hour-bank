@@ -25,10 +25,10 @@ function Copyright() {
 }
 
 export default function StickyFooter() {
-    const {enqueueSnackbar} = useSnackbar();
-    onMessage(messaging, (payload) => {
-        enqueueSnackbar(payload.notification.body, {variant: 'info', preventDuplicate: true})
-    })
+    // const {enqueueSnackbar} = useSnackbar();
+    // onMessage(messaging, (payload) => {
+    //     enqueueSnackbar(payload.notification.body, {variant: 'info', preventDuplicate: true})
+    // })
     return (
         <Box
             sx={{

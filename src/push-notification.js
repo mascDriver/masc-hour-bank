@@ -43,9 +43,9 @@ export const fetchToken = () => {
         // catch error while creating client token
     });
 }
-export const onMessageListener = () =>
-    new Promise((resolve) => {
-        onMessage(messaging, (payload) => {
-            resolve(payload);
-        });
-    });
+// export const onMessageListener = () =>
+//     new Promise((resolve) => {
+//         onMessage(messaging, (payload) => {
+//             resolve(payload);
+//         });
+//     });
