@@ -7,11 +7,16 @@
 // You can also remove this file if you'd prefer not to use a
 // service worker, and the Workbox build step will be skipped.
 
-import { clientsClaim } from 'workbox-core';
-import { ExpirationPlugin } from 'workbox-expiration';
-import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
-import { registerRoute } from 'workbox-routing';
-import { StaleWhileRevalidate } from 'workbox-strategies';
+import {clientsClaim} from 'workbox-core';
+import {ExpirationPlugin} from 'workbox-expiration';
+import {createHandlerBoundToURL, precacheAndRoute} from 'workbox-precaching';
+import {registerRoute} from 'workbox-routing';
+import {StaleWhileRevalidate} from 'workbox-strategies';
+// Any other custom service worker logic can go here.
+// Scripts for firebase and firebase messaging
+import {getMessaging} from "firebase/messaging";
+import {onBackgroundMessage} from "firebase/messaging/sw";
+import {initializeApp} from "firebase/app";
 
 clientsClaim();
 
@@ -69,4 +74,29 @@ self.addEventListener('message', (event) => {
   }
 });
 
-// Any other custom service worker logic can go here.
+// Initialize the Firebase app in the service worker by passing the generated config
+const firebaseApp = initializeApp({
+    apiKey: "AIzaSyA-HGW2GVU474Q92cjoMyq9g6lD4bKK3vU",
+    authDomain: "masc-hour-banc.firebaseapp.com",
+    projectId: "masc-hour-banc",
+    storageBucket: "masc-hour-banc.appspot.com",
+    messagingSenderId: "956264474936",
+    appId: "1:956264474936:web:a3300733f2c287e11e79cd",
+    measurementId: "G-JWHG9HJRBH"
+});
+
+// Retrieve firebase messaging
+const messaging = getMessaging(firebaseApp);
+onBackgroundMessage(messaging, (payload) => {
+    console.log('[firebase-messaging-sw.js] Received background message ', payload);
+    // Customize notification here
+    const notificationTitle = payload.notification.title;
+    const notificationOptions = {
+        body: payload.notification.body,
+        icon: "/img.png",
+        badge: "/badge_128.png"
+    };
+
+    self.registration.showNotification(notificationTitle,
+        notificationOptions);
+});
