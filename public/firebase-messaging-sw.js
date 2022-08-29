@@ -63,6 +63,8 @@ const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
     const {title, body, icon, badge, ...restPayload} = payload.data;
+    console.log(restPayload)
+    console.log(JSON.stringify(restPayload))
 
     const notificationOptions = {
         body,
