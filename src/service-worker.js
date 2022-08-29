@@ -12,6 +12,8 @@ import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
+import {onBackgroundMessage} from "firebase/messaging/sw";
+import {messaging} from "./push-notification";
 
 clientsClaim();
 
@@ -70,3 +72,17 @@ self.addEventListener('message', (event) => {
 });
 
 // Any other custom service worker logic can go here.
+
+onBackgroundMessage(messaging, (payload) => {
+    console.log('[push-notification.js] Received background message ', payload);
+    // Customize notification here
+    const notificationTitle = payload.notification.title;
+    const notificationOptions = {
+        body: payload.notification.body,
+        icon: "/img.png",
+        badge: "/badge_128.png"
+    };
+
+    self.registration.showNotification(notificationTitle,
+        notificationOptions);
+});

@@ -3,7 +3,6 @@ import {initializeApp} from "firebase/app";
 import {getMessaging, getToken} from "firebase/messaging";
 import {getAnalytics} from "firebase/analytics";
 import {saveTokenFCM} from "./hooks/PostDataApi";
-import {onBackgroundMessage} from "firebase/messaging/sw";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -50,16 +49,3 @@ export const fetchToken = () => {
 //             resolve(payload);
 //         });
 //     });
-onBackgroundMessage(messaging, (payload) => {
-    console.log('[push-notification.js] Received background message ', payload);
-    // Customize notification here
-    const notificationTitle = payload.notification.title;
-    const notificationOptions = {
-        body: payload.notification.body,
-        icon: "/img.png",
-        badge: "/badge_128.png"
-    };
-
-    self.registration.showNotification(notificationTitle,
-        notificationOptions);
-});
