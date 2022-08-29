@@ -12,8 +12,6 @@ import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
-import {onBackgroundMessage} from "firebase/messaging/sw";
-import {messaging} from "./push-notification";
 
 clientsClaim();
 
@@ -73,6 +71,23 @@ self.addEventListener('message', (event) => {
 
 // Any other custom service worker logic can go here.
 
+import {initializeApp} from "firebase/app";
+import {getMessaging} from "firebase/messaging";
+import {onBackgroundMessage} from "firebase/messaging/sw";
+
+const firebaseConfig = {
+    apiKey: process.env.REACT_APP_apiKey,
+    authDomain: process.env.REACT_APP_authDomain,
+    projectId: process.env.REACT_APP_projectId,
+    storageBucket: process.env.REACT_APP_storageBucket,
+    messagingSenderId: process.env.REACT_APP_messagingSenderId,
+    appId: process.env.REACT_APP_appId,
+    measurementId: process.env.REACT_APP_measurementId
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const messaging = getMessaging(app);
 onBackgroundMessage(messaging, (payload) => {
     console.log('[push-notification.js] Received background message ', payload);
     // Customize notification here
