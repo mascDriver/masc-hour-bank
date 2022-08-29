@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import {initializeApp} from "firebase/app";
-import {getMessaging, getToken} from "firebase/messaging";
+import {getMessaging, getToken, onMessage} from "firebase/messaging";
 import {getAnalytics} from "firebase/analytics";
 import {saveTokenFCM} from "./hooks/PostDataApi";
 

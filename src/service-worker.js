@@ -70,34 +70,3 @@ self.addEventListener('message', (event) => {
 });
 
 // Any other custom service worker logic can go here.
-
-import {initializeApp} from "firebase/app";
-import {getMessaging} from "firebase/messaging";
-import {onBackgroundMessage} from "firebase/messaging/sw";
-
-const firebaseConfig = {
-    apiKey: process.env.REACT_APP_apiKey,
-    authDomain: process.env.REACT_APP_authDomain,
-    projectId: process.env.REACT_APP_projectId,
-    storageBucket: process.env.REACT_APP_storageBucket,
-    messagingSenderId: process.env.REACT_APP_messagingSenderId,
-    appId: process.env.REACT_APP_appId,
-    measurementId: process.env.REACT_APP_measurementId
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const messaging = getMessaging(app);
-onBackgroundMessage(messaging, (payload) => {
-    console.log('[push-notification.js] Received background message ', payload);
-    // Customize notification here
-    const notificationTitle = payload.notification.title;
-    const notificationOptions = {
-        body: payload.notification.body,
-        icon: "/img.png",
-        badge: "/badge_128.png"
-    };
-
-    self.registration.showNotification(notificationTitle,
-        notificationOptions);
-});
