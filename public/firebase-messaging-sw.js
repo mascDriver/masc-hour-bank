@@ -36,5 +36,6 @@ messaging.onBackgroundMessage(function (payload) {
 });
 self.addEventListener('notificationclick', function(event) {
   event.notification.close();
+  console.log(event.notification)
   event.waitUntil(self.clients.openWindow(event.notification.data.url || event.notification.data.click_action));
 });
