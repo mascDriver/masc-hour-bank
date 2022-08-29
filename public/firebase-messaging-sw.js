@@ -63,15 +63,13 @@ const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
     const {title, body, icon, badge, ...restPayload} = payload.data;
-    console.log(restPayload)
-    console.log(JSON.stringify(restPayload))
 
     const notificationOptions = {
         body,
         icon: icon || '/img.png', // path to your "fallback" firebase notification logo
         badge: badge || '/badge_128.png',
-        restPayload,
     };
+    Object.assign(notificationOptions, restPayload)
 
     return self.registration.showNotification(title, notificationOptions);
 });
