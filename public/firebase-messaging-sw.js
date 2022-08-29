@@ -7,6 +7,7 @@ importScripts('https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js')
 const firebaseConfig = {
     apiKey: "AIzaSyA-HGW2GVU474Q92cjoMyq9g6lD4bKK3vU",
     authDomain: "masc-hour-banc.firebaseapp.com",
+    databaseURL: 'https://masc-hour-banc.firebaseio.com',
     projectId: "masc-hour-banc",
     storageBucket: "masc-hour-banc.appspot.com",
     messagingSenderId: "956264474936",
