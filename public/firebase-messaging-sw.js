@@ -34,10 +34,7 @@ messaging.onBackgroundMessage(function (payload) {
     return self.registration.showNotification(notificationTitle,
         notificationOptions);
 });
-
-function handleClick (event) {
+self.addEventListener('notificationclick', function(event) {
   event.notification.close();
-  // Open the url you set on notification.data
-  clients.openWindow(event.notification.data.url || event.notification.data.click_action)
-}
-self.addEventListener('notificationclick', handleClick);
+  event.waitUntil(self.clients.openWindow(event.notification.data.url || event.notification.data.click_action));
+});
