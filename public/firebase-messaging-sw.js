@@ -30,6 +30,6 @@ messaging.onBackgroundMessage(function (payload) {
         badge: "/badge_128.png"
     };
 
-    self.registration.showNotification(notificationTitle,
+    return self.registration.showNotification(notificationTitle,
         notificationOptions);
 });
