@@ -75,11 +75,9 @@ messaging.onBackgroundMessage((payload) => {
 });
 
 self.addEventListener('notificationclick', (event) => {
-    // console.log('[firebase-messaging-sw.js] notificationclick ', event); // debug info
-
-    // click_action described at https://github.com/BrunoS3D/firebase-messaging-sw.js#click-action
-    if (event.notification.data && event.notification.data.click_action) {
-        self.clients.openWindow(event.notification.data.click_action);
+    const dataPayload = JSON.parse(event.notification.data)
+    if (dataPayload && dataPayload.click_action) {
+        self.clients.openWindow(dataPayload.click_action);
     } else {
         self.clients.openWindow(event.currentTarget.origin);
     }
