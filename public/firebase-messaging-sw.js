@@ -26,8 +26,9 @@ messaging.onBackgroundMessage(function (payload) {
     const notificationTitle = payload.data.title;
     const notificationOptions = {
         body: payload.data.body,
-        icon: "/img.png",
-        badge: "/badge_128.png"
+        icon: payload.data.icon || "/img.png",
+        badge: payload.data.badge || "/badge_128.png",
+        click_action: payload.data.click_action
     };
 
     return self.registration.showNotification(notificationTitle,
