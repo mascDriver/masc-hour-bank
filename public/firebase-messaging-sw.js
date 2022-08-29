@@ -68,7 +68,7 @@ messaging.onBackgroundMessage((payload) => {
         body,
         icon: icon || '/img.png', // path to your "fallback" firebase notification logo
         badge: badge || '/badge_128.png',
-        data: restPayload,
+        restPayload,
     };
 
     return self.registration.showNotification(title, notificationOptions);
