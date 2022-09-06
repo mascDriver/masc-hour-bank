@@ -5,9 +5,9 @@
     ],
     "target": {
       "namespace": "android_app",
-      "package_name": "app.vercel.maschourbank.twa",
+      "package_name": "br.com.mascdriver.hourbank.twa",
       "sha256_cert_fingerprints": [
-        "F1:60:11:39:3D:64:AA:F8:A7:FE:9D:98:DD:3A:CA:80:9F:A0:47:A1:CC:23:C0:20:8C:C9:6C:AB:C3:A4:8C:1D"
+        "D0:01:7F:C3:79:0B:98:55:89:73:D7:3A:23:3D:7F:3C:6A:F7:F2:7B:E5:07:35:EE:65:D9:30:E8:1A:45:25:66"
       ]
     }
   }

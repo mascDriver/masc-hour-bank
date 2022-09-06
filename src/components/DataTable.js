@@ -21,9 +21,16 @@ export default function DataTable(props) {
                                 color: 'primary.main',
                             },
                         }}
+                        initialState={{
+                            sorting: {
+                                sortModel: [{field: 'day', sort: 'desc'}],
+                            },
+                        }}
                         rows={rows}
                         columns={columns}
-                        onCellEditCommit={(hour) => {patchAttendancceHour(hour, props.setRow)}}
+                        onCellEditCommit={(hour) => {
+                            patchAttendancceHour(hour, props.setRow)
+                        }}
                         pageSize={5}
                         rowsPerPageOptions={[5]}
                     />
