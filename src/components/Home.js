@@ -75,7 +75,7 @@ function Home() {
                             <Route path="signup" element={<SignUp/>}/>
                         </Routes>
                         <Adsense
-                            client="pub-6475308370183973"
+                            client="ca-pub-6475308370183973"
                             slot="5706914569"
                             style={{display: 'block'}}
                             layout="in-article"
