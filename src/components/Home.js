@@ -14,6 +14,7 @@ import {blueGrey, deepOrange, orange} from '@mui/material/colors';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import {ConfirmProvider} from "material-ui-confirm";
 import {fetchToken} from '../push-notification';
+import {Adsense} from "@ctrl/react-adsense";
 
 
 function Home() {
@@ -73,6 +74,13 @@ function Home() {
                             <Route path="signin" element={<SignIn/>}/>
                             <Route path="signup" element={<SignUp/>}/>
                         </Routes>
+                        <Adsense
+                            client="pub-6475308370183973"
+                            slot="5706914569"
+                            style={{display: 'block'}}
+                            layout="in-article"
+                            format="fluid"
+                        />
                         <StickyFooter/>
                     </ConfirmProvider>
                 </SnackbarProvider>
