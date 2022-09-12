@@ -76,7 +76,7 @@ function Home() {
                         </Routes>
                         <Adsense
                             client="ca-pub-6475308370183973"
-                            slot="5706914569"
+                            slot="3668757741"
                             style={{display: 'block'}}
                             layout="in-article"
                             format="fluid"
