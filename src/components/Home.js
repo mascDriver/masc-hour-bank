@@ -8,7 +8,7 @@ import ButtonAppBar from "./ButtonAppBar";
 import StickyFooter from "./StickyFooter";
 import AttendanceDay from "./AttendanceDay";
 import {SnackbarProvider} from "notistack";
-import {CssBaseline} from "@mui/material";
+import {Container} from "@mui/material";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
 import {blueGrey, deepOrange, orange} from '@mui/material/colors';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -63,7 +63,6 @@ function Home() {
     return (
         <Router>
             <ThemeProvider theme={theme}>
-                <CssBaseline/>
                 <SnackbarProvider maxSnack={10}>
                     <ConfirmProvider>
                         <ButtonAppBar colorMode={colorMode} theme={theme}/>
@@ -74,13 +73,15 @@ function Home() {
                             <Route path="signin" element={<SignIn/>}/>
                             <Route path="signup" element={<SignUp/>}/>
                         </Routes>
-                        <Adsense
-                            client="ca-pub-6475308370183973"
-                            slot="3668757741"
-                            style={{display: 'block'}}
-                            layout="in-article"
-                            format="fluid"
-                        />
+                        <Container maxWidth="sm">
+                            <Adsense
+                                client="ca-pub-6475308370183973"
+                                slot="3668757741"
+                                style={{display: 'block'}}
+                                layout="in-article"
+                                format="fluid"
+                            />
+                        </Container>
                         <StickyFooter/>
                     </ConfirmProvider>
                 </SnackbarProvider>

@@ -5,10 +5,7 @@ import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import {Icon} from "@iconify/react/dist/iconify";
 import githubIcon from '@iconify-icons/mdi/github';
-import {deepOrange, orange} from '@mui/material/colors';
-import {useSnackbar} from "notistack";
-import {onMessage} from "firebase/messaging";
-import {messaging} from "../push-notification";
+import {deepOrange} from '@mui/material/colors';
 
 function Copyright() {
     return (
@@ -32,9 +29,10 @@ export default function StickyFooter() {
     return (
         <Box
             sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                minHeight: '65.3vh'
+                marginTop: 'calc(10% + 60px)',
+                position: 'fixed',
+                bottom: 0,
+                width: '100%'
             }}
         >
             <Box
