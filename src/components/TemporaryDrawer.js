@@ -11,6 +11,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import IconButton from "@mui/material/IconButton";
 import {Link as RouterLink} from "react-router-dom";
 import {CalendarMonth, CalendarToday, Home, Login} from "@mui/icons-material";
+import {Adsense} from "@ctrl/react-adsense";
 
 export default function TemporaryDrawer(...props) {
     const [state, setState] = React.useState(false);
@@ -58,6 +59,15 @@ export default function TemporaryDrawer(...props) {
                             <ListItemText primary={'Horários no mês'}/>
                         </ListItemButton>
                     </ListItem>
+                    <ListItem disablePadding>
+                        <Adsense
+                            client="ca-pub-6475308370183973"
+                            slot="2841210471"
+                            style={{display: 'block'}}
+                            layout="display"
+                            format="auto"
+                        />
+                    </ListItem>
                 </List>
                 :
                 <List>
@@ -68,6 +78,15 @@ export default function TemporaryDrawer(...props) {
                             </ListItemIcon>
                             <ListItemText primary={'Login'}/>
                         </ListItemButton>
+                    </ListItem>
+                    <ListItem disablePadding>
+                        <Adsense
+                            client="ca-pub-6475308370183973"
+                            slot="2841210471"
+                            style={{display: 'block'}}
+                            layout="display"
+                            format="auto"
+                        />
                     </ListItem>
                 </List>
             }
